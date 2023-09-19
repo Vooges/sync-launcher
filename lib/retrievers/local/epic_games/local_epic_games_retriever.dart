@@ -5,9 +5,9 @@ import 'package:collection/collection.dart'; // https://stackoverflow.com/questi
 
 import 'package:sync_launcher/models/dlc_info.dart';
 import 'package:sync_launcher/models/game_info.dart';
-import 'package:sync_launcher/retrievers/local/base_local_game_retriever.dart';
+import 'package:sync_launcher/retrievers/local/base_local_retriever.dart';
 
-class LocalEpicGamesRetriever extends BaseLocalGameRetriever {
+class LocalEpicGamesRetriever extends BaseLocalRetriever {
     LocalEpicGamesRetriever(super.manifestLocation);
 
   @override

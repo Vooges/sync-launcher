@@ -1,9 +1,9 @@
 import 'package:sync_launcher/models/game_info.dart';
 
-abstract class BaseLocalGameRetriever {
+abstract class BaseLocalRetriever {
   String manifestLocation;
 
-  BaseLocalGameRetriever(this.manifestLocation);
+  BaseLocalRetriever(this.manifestLocation);
 
   Future<List<GameInfo>> retrieve();
 }
