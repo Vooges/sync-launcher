@@ -5,6 +5,7 @@ import 'package:collection/collection.dart'; // https://stackoverflow.com/questi
 
 import 'package:sync_launcher/models/dlc_info.dart';
 import 'package:sync_launcher/models/game_info.dart';
+import 'package:sync_launcher/models/launcher_info.dart';
 import 'package:sync_launcher/retrievers/local/base_local_retriever.dart';
 
 class LocalEpicGamesRetriever extends BaseLocalGameRetriever {
@@ -28,6 +29,7 @@ class LocalEpicGamesRetriever extends BaseLocalGameRetriever {
           title: jsonContents['DisplayName'] as String, 
           appId: jsonContents['CatalogItemId'] as String, 
           launchURL: _buildGameLaunchURL(mainGameCatalogNamespace: jsonContents['MainGameCatalogNamespace'], catalogItemId: jsonContents['CatalogItemId'], mainGameAppName: jsonContents['MainGameAppName']),
+          launcherInfo: LauncherInfo(title: 'Epic Games', imagePath: 'assets/images/launchers/epic_games.svg'),
           description: '', // TODO: try to download it. If all fails, leave null. 
           imagePath: '', // TODO: try to download it. If all fails, leave null. 
           installSize: jsonContents['InstallSize'] as int, 

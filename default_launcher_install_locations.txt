@@ -8,3 +8,5 @@ Epic Games => C:\Program Files(x86)\Epic Games\
     - 3A42ac1ee840304cb1807172a9b47dc8e3 -> 42ac1ee840304cb1807172a9b47dc8e3 is the CatalogItemId
     - 3AKinglet -> Kinglet is the MainGameAppName
     - %3A looks to be the separator
+
+    Overcooked launch url = com.epicgames.launcher://apps/4561b40e52584ac2bcf34bbd5c401480%3A7e97838fff4e48e79f892f1e64d42cb0%3ASage?action=launch&silent=true

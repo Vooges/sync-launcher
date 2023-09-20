@@ -1,4 +1,5 @@
 import 'package:sync_launcher/models/dlc_info.dart';
+import 'package:sync_launcher/models/launcher_info.dart';
 
 class GameInfo {
   String title;
@@ -9,11 +10,13 @@ class GameInfo {
   String version;
   int installSize; // Size is in bytes
   List<DLCInfo> dlc;
+  LauncherInfo launcherInfo;
 
   GameInfo({
     required this.title,
     required this.appId,
     required this.launchURL,
+    required this.launcherInfo,
     this.imagePath,
     String? description,
     int? installSize,
@@ -33,7 +36,8 @@ class GameInfo {
         'app_id': appId,
         'version': version,
         'install_size': installSize,
-        'dlc': dlc
+        'dlc': dlc,
+        'launcher': launcherInfo
       };
     }
 }
