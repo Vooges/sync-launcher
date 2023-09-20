@@ -11,5 +11,15 @@ class DLCInfo {
     required this.parentAppId,
     String? imagePath,
     int? installSize
-}) : installSize = installSize ?? 0;
+  }) : installSize = installSize ?? 0;
+
+  Map toJson(){
+    return {
+      'title': title,
+      'app_id': appId,
+      'parent_app_id': parentAppId,
+      'image_path': imagePath,
+      'install_size': installSize
+    };
+  }
 }

@@ -18,4 +18,15 @@ class GameInfo {
 }) : installSize = installSize ?? 0,
     version = version ?? "Unknown", 
     dlc = dlc ?? List.empty(growable: true);
+
+    Map toJson(){
+      return {
+        'title': title,
+        'image_path': imagePath,
+        'app_id': appId,
+        'version': version,
+        'install_size': installSize,
+        'dlc': dlc
+      };
+    }
 }

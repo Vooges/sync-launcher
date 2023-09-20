@@ -7,13 +7,13 @@ import 'package:sync_launcher/models/dlc_info.dart';
 import 'package:sync_launcher/models/game_info.dart';
 import 'package:sync_launcher/retrievers/local/base_local_retriever.dart';
 
-class LocalEpicGamesRetriever extends BaseLocalRetriever {
-    LocalEpicGamesRetriever(super.manifestLocation);
+class LocalEpicGamesRetriever extends BaseLocalGameRetriever {
+  LocalEpicGamesRetriever() : super(manifestLocation: 'C:\\ProgramData\\Epic\\EpicGamesLauncher\\Data\\Manifests');
 
   @override
   Future<List<GameInfo>> retrieve() async {
-    final Directory manifestDirectory = Directory(super.manifestLocation);
-    final Iterable<File> manifests = (await manifestDirectory.list().toList()).whereType<File>();
+    final Iterable<File> manifests = await _getManifests();
+    
     List<GameInfo> foundGames = List.empty(growable: true);
     List<DLCInfo> foundDLC = List.empty(growable: true);
 
@@ -21,8 +21,7 @@ class LocalEpicGamesRetriever extends BaseLocalRetriever {
       String contents = await manifest.readAsString();
 
       dynamic jsonContents = jsonDecode(contents); // Epic Games .ITEM manifest files are written in valid JSON.
-
-      List<String> appCategories = jsonContents['AppCategories'] as List<String>;
+      List<String> appCategories = List.from(jsonContents['AppCategories']);
 
       if (appCategories.contains('games')) {
         foundGames.add(GameInfo(
@@ -45,10 +44,26 @@ class LocalEpicGamesRetriever extends BaseLocalRetriever {
       }
     }
 
-    // Add DLC after all the games have been found to prevent possibility of trying to add DLC to a game before 
-    // the game's manifest file has been processed.
-    for (DLCInfo dlc in foundDLC) {
-      GameInfo? game = foundGames.firstWhereOrNull((element) => element.appId == dlc.parentAppId);
+    return _matchDLCToGames(dlcInfo: foundDLC, gameInfo: foundGames);
+  }
+
+  /// Gets the manifest files.
+  /// 
+  /// Retrieves the manifest files for the installed apps.
+  Future<Iterable<File>> _getManifests() async {
+    final Directory manifestDirectory = Directory(super.manifestLocation);
+    final Iterable<File> manifests = (await manifestDirectory.list().toList()).whereType<File>();
+
+    return manifests;
+  }
+
+  /// Matches the DLC to their respective games.
+  /// 
+  /// Add DLC after all the games have been found to prevent possibility of trying to add DLC to a game 
+  /// before the game's manifest file has been processed.
+  List<GameInfo> _matchDLCToGames({required List<DLCInfo> dlcInfo, required List<GameInfo> gameInfo}){
+    for (DLCInfo dlc in dlcInfo) {
+      GameInfo? game = gameInfo.firstWhereOrNull((element) => element.appId == dlc.parentAppId);
 
       if (game == null){
         // TODO: log "Couldn't find base game with appId dlc.parentAppId for DLC dlc.title".
@@ -59,6 +74,6 @@ class LocalEpicGamesRetriever extends BaseLocalRetriever {
       game.dlc.add(dlc);
     }
 
-    return foundGames;
+    return gameInfo;
   }
 }
