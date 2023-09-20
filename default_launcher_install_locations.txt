@@ -4,9 +4,7 @@ Epic Games => C:\Program Files(x86)\Epic Games\
     It appears that DLC can be matched with the game itself by checking the CatalogNamespace/MainGameCatalogNamespace
     
     Sid Meier's Civilization VI launch url = com.epicgames.launcher://apps/cd14dcaa4f3443f19f7169a980559c62%3A42ac1ee840304cb1807172a9b47dc8e3%3AKinglet?action=launch&silent=true -> 
-    - cd14dcaa4f3443f19f7169a980559c62 looks to be the CatalogNamespace/MainGameCatalogNamespace
-    - 3A42ac1ee840304cb1807172a9b47dc8e3 is unidentified as of yet
-    - 3AKinglet is unidentified as of yet, looks like it has something to do with AppName/MainGameAppName
-    - % looks to be the separator
-
-    ExpectingDLCInstalled consists of a key-value pair -> the key is made up by the CatalogNamespace, a colon, the CatalogItemId of the DLC, a colon again, and the DLC's AppName. The value is set to true (Don't yet know when this would be set to anything other than true).
+    - cd14dcaa4f3443f19f7169a980559c62 looks to be the MainGameCatalogNamespace
+    - 3A42ac1ee840304cb1807172a9b47dc8e3 -> 42ac1ee840304cb1807172a9b47dc8e3 is the CatalogItemId
+    - 3AKinglet -> Kinglet is the MainGameAppName
+    - %3A looks to be the separator

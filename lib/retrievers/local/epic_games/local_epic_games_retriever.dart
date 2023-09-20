@@ -27,7 +27,9 @@ class LocalEpicGamesRetriever extends BaseLocalGameRetriever {
         foundGames.add(GameInfo(
           title: jsonContents['DisplayName'] as String, 
           appId: jsonContents['CatalogItemId'] as String, 
-          imagePath: '', // TODO: attempt to find it locally, else try to download it. If all fails, leave null. 
+          launchURL: _buildGameLaunchURL(mainGameCatalogNamespace: jsonContents['MainGameCatalogNamespace'], catalogItemId: jsonContents['CatalogItemId'], mainGameAppName: jsonContents['MainGameAppName']),
+          description: '', // TODO: try to download it. If all fails, leave null. 
+          imagePath: '', // TODO: try to download it. If all fails, leave null. 
           installSize: jsonContents['InstallSize'] as int, 
           version: jsonContents['AppVersionString'] as String
           ));
@@ -36,11 +38,11 @@ class LocalEpicGamesRetriever extends BaseLocalGameRetriever {
           title: jsonContents['DisplayName'] as String, 
           appId: jsonContents['CatalogItemId'] as String,
           parentAppId: jsonContents['MainGameCatalogItemId'] as String,
-          imagePath: '', // TODO: attempt to find it locally, else try to download it. If all fails, leave null. 
+          imagePath: '', // TODO: try to download it. If all fails, leave null. 
           installSize: jsonContents['InstallSize'] as int
         ));
       } else { // Manifest doesn't belong to a game or DLC.
-        // TODO: Log "Sync can't do anything with non-game or -DLC manifest files, AppCategories are appCategories".
+        // TODO: Log "Sync can't do anything with non-game or -DLC manifest files, AppCategories are $appCategories".
       }
     }
 
@@ -66,7 +68,7 @@ class LocalEpicGamesRetriever extends BaseLocalGameRetriever {
       GameInfo? game = gameInfo.firstWhereOrNull((element) => element.appId == dlc.parentAppId);
 
       if (game == null){
-        // TODO: log "Couldn't find base game with appId dlc.parentAppId for DLC dlc.title".
+        // TODO: log "Couldn't find base game with appId $dlc.parentAppId for DLC $dlc.title".
 
         continue;
       }
@@ -75,5 +77,15 @@ class LocalEpicGamesRetriever extends BaseLocalGameRetriever {
     }
 
     return gameInfo;
+  }
+
+  /// Builds the launch URL for the game.
+  String _buildGameLaunchURL({required String mainGameCatalogNamespace, required String catalogItemId, required String mainGameAppName}){
+    // TODO: Move these constants to be class properties.
+    const String baseUrl = 'com.epicgames.launcher://apps/';
+    const String separator = '%3A';
+    const String launchOptions = '?action=launch&silent=true';
+
+    return baseUrl + mainGameCatalogNamespace + separator + catalogItemId + separator + mainGameAppName + launchOptions;
   }
 }
