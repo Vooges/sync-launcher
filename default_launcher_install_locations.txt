@@ -16,3 +16,6 @@ Steam => C:\Program Files(x86)\Steam\
     This folder also contains the manifests for Steamworks Common Redistributables and applications such as Wallpaper Engine
 
     Crusader Kings II launch url = steam://rungameid/203770
+
+    C:\Program Files (x86)\Steam\appcache\librarycache contains header, icon and banner images for the library.
+    C:\Program Files (x86)\Steam\userdata\$userId\config\librarycache contains metadata and more for all games in the the user's library.

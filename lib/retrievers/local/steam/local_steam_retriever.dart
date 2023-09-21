@@ -5,8 +5,11 @@ import 'package:sync_launcher/models/dlc_info.dart';
 import 'package:sync_launcher/models/game_info.dart';
 import 'package:sync_launcher/models/launcher_info.dart';
 import 'package:sync_launcher/retrievers/local/base_local_retriever.dart';
+import 'package:sync_launcher/retrievers/local/steam/local_steam_metadata_retriever.dart';
 
 class LocalSteamRetriever extends BaseLocalGameRetriever {
+  final LocalSteamMetadataRetriever metadataRetriever = LocalSteamMetadataRetriever(installPath: 'C:\\Program Files (x86)\\Steam');
+
   LocalSteamRetriever() : super(manifestLocation: 'C:\\Program Files (x86)\\Steam\\steamapps');
 
   @override
@@ -31,8 +34,8 @@ class LocalSteamRetriever extends BaseLocalGameRetriever {
             title: 'Steam', 
             imagePath: 'assets/images/launchers/steam/logo.svg'
           ),
-          imagePath: null,
-          description: null,
+          imagePath: await metadataRetriever.getImagePath(appId: jsonContents['appid'] as String),
+          description: await metadataRetriever.getDescription(appId: jsonContents['appid'] as String),
           installSize: int.parse(jsonContents['SizeOnDisk'] as String),
           version: jsonContents['buildid'] as String,
           dlc: _getDLCInfo(
@@ -41,7 +44,7 @@ class LocalSteamRetriever extends BaseLocalGameRetriever {
           )
         ));
       } else {
-        // TODO: Log "App with appId $appId is not a game."
+        // TODO: Log "App with appId $appId is not a game. Could also just ignore it."
       }
     }
 
@@ -90,7 +93,7 @@ class LocalSteamRetriever extends BaseLocalGameRetriever {
     for (dynamic installedDepot in installedDepots.values) {
       if (installedDepot.containsKey('dlcappid')){
         foundDLC.add(DLCInfo(
-          title: 'Unknown', // TODO: find this out via the Steam API. or find a way to get this locally (preferred).
+          title: 'Unknown', // TODO: find this out via the Steam API, or find a way to get this locally (preferred).
           appId: installedDepot['dlcappid'] as String, 
           parentAppId: parentAppId
         ));
