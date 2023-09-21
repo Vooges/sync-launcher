@@ -29,9 +29,12 @@ class LocalEpicGamesRetriever extends BaseLocalGameRetriever {
           title: jsonContents['DisplayName'] as String, 
           appId: jsonContents['CatalogItemId'] as String, 
           launchURL: _buildGameLaunchURL(mainGameCatalogNamespace: jsonContents['MainGameCatalogNamespace'], catalogItemId: jsonContents['CatalogItemId'], mainGameAppName: jsonContents['MainGameAppName']),
-          launcherInfo: LauncherInfo(title: 'Epic Games', imagePath: 'assets/images/launchers/epic_games.svg'),
-          description: '', // TODO: try to download it. If all fails, leave null. 
-          imagePath: '', // TODO: try to download it. If all fails, leave null. 
+          launcherInfo: LauncherInfo(
+            title: 'Epic Games', 
+            imagePath: 'assets/images/launchers/epic_games/logo.svg'
+          ),
+          description: null, // TODO: try to download it. If all fails, leave null. 
+          imagePath: null, // TODO: try to download it. If all fails, leave null. 
           installSize: jsonContents['InstallSize'] as int, 
           version: jsonContents['AppVersionString'] as String
           ));
@@ -40,7 +43,7 @@ class LocalEpicGamesRetriever extends BaseLocalGameRetriever {
           title: jsonContents['DisplayName'] as String, 
           appId: jsonContents['CatalogItemId'] as String,
           parentAppId: jsonContents['MainGameCatalogItemId'] as String,
-          imagePath: '', // TODO: try to download it. If all fails, leave null. 
+          imagePath: null, // TODO: try to download it. If all fails, leave null. 
           installSize: jsonContents['InstallSize'] as int
         ));
       } else { // Manifest doesn't belong to a game or DLC.

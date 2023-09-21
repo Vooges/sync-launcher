@@ -10,3 +10,9 @@ Epic Games => C:\Program Files(x86)\Epic Games\
     - %3A looks to be the separator
 
     Overcooked launch url = com.epicgames.launcher://apps/4561b40e52584ac2bcf34bbd5c401480%3A7e97838fff4e48e79f892f1e64d42cb0%3ASage?action=launch&silent=true
+
+Steam => C:\Program Files(x86)\Steam\
+    Manifest location = C:\\Program Files (x86)\\Steam\\steamapps (.acf extension)
+    This folder also contains the manifests for Steamworks Common Redistributables and applications such as Wallpaper Engine
+
+    Crusader Kings II launch url = steam://rungameid/203770
