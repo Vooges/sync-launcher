@@ -24,7 +24,7 @@ class GameInfo {
     List<DLCInfo>? dlc
 }) : description = description ?? 'Unknown',
     installSize = installSize ?? 0,
-    version = version ?? "Unknown", 
+    version = version ?? 'Unknown', 
     dlc = dlc ?? List.empty(growable: true);
 
     Map toJson(){

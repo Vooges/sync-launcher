@@ -4,12 +4,13 @@ import 'package:sync_launcher/retrievers/local/epic_games/local_epic_games_retri
 import 'package:sync_launcher/retrievers/local/steam/local_steam_retriever.dart';
 
 class GameRetriever {
-  List<String> connectedLaunchers = ["Epic Games", "Steam"];
+  List<String> connectedLaunchers = ['Epic Games', 'Steam'];
   Map<String, BaseLocalGameRetriever> retrievers = {
-    "Epic Games": LocalEpicGamesRetriever(),
-    "Steam": LocalSteamRetriever()
+    'Epic Games': LocalEpicGamesRetriever(),
+    'Steam': LocalSteamRetriever()
   };
 
+  /// Retrieves all games for the connected launchers.
   Future<List<GameInfo>> retrieveGames() async {
     List<GameInfo> foundGames = List.empty(growable: true);
 

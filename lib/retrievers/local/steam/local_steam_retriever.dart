@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:sync_launcher/models/dlc_info.dart';
 import 'package:sync_launcher/models/game_info.dart';
 import 'package:sync_launcher/models/launcher_info.dart';
 import 'package:sync_launcher/retrievers/local/base_local_retriever.dart';
@@ -34,7 +35,10 @@ class LocalSteamRetriever extends BaseLocalGameRetriever {
           description: null,
           installSize: int.parse(jsonContents['SizeOnDisk'] as String),
           version: jsonContents['buildid'] as String,
-          dlc: null
+          dlc: _getDLCInfo(
+            installedDepots: jsonContents['InstalledDepots'] as Map<String, dynamic>, 
+            parentAppId: jsonContents['appid'] as String
+          )
         ));
       } else {
         // TODO: Log "App with appId $appId is not a game."
@@ -57,17 +61,43 @@ class LocalSteamRetriever extends BaseLocalGameRetriever {
 
   /// Turns the provided acf string to valid JSON.
   dynamic _acfToJson(String acf){
+    // Replace newlines with commas.
     acf = acf.replaceAll(RegExp(r'(\r\n|\r|\n)'), ',');
+    // Remove tab characters.
     acf = acf.replaceAll('	', '');
+    // Fix key and value pair for simple values by adding a colon.
     acf = acf.replaceAll('""','": "');
+    // Remove comma added by the first step.
     acf = acf.replaceAll('{,', '{');
+    // Remove "AppState" + the comma added by step 1 at the beginning.
     acf = acf.replaceFirst('"AppState",', '');
+    // Fix key and value pair for object values by removing comma added in step 1 and adding a colon.
     acf = acf.replaceAll('",{', '":{');
+    // Remove trailing commas on simple values.
     acf = acf.replaceAll(',}', '}');
+    // Remove trailing commas on object values.
     acf = acf.replaceAll('},}', '}}');
+    // Removes final trailing comma.
     acf = acf.substring(0, acf.length - 1);
 
     return jsonDecode(acf);
+  }
+
+  /// Finds the dlc for the game.
+  List<DLCInfo> _getDLCInfo({required Map<String, dynamic> installedDepots, required String parentAppId}){
+    List<DLCInfo> foundDLC = List.empty(growable: true);
+
+    for (dynamic installedDepot in installedDepots.values) {
+      if (installedDepot.containsKey('dlcappid')){
+        foundDLC.add(DLCInfo(
+          title: 'Unknown', // TODO: find this out via the Steam API. or find a way to get this locally (preferred).
+          appId: installedDepot['dlcappid'] as String, 
+          parentAppId: parentAppId
+        ));
+      }
+    }
+
+    return foundDLC;
   }
 
   /// Builds the launch URL for the game.
