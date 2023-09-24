@@ -28,13 +28,17 @@ class LocalEpicGamesRetriever extends BaseLocalGameRetriever {
         foundGames.add(GameInfo(
           title: jsonContents['DisplayName'] as String, 
           appId: jsonContents['CatalogItemId'] as String, 
-          launchURL: _buildGameLaunchURL(mainGameCatalogNamespace: jsonContents['MainGameCatalogNamespace'], catalogItemId: jsonContents['CatalogItemId'], mainGameAppName: jsonContents['MainGameAppName']),
+          launchURL: _buildGameLaunchURL(
+            mainGameCatalogNamespace: jsonContents['MainGameCatalogNamespace'], 
+            catalogItemId: jsonContents['CatalogItemId'], 
+            mainGameAppName: jsonContents['MainGameAppName']
+          ),
           launcherInfo: LauncherInfo(
             title: 'Epic Games', 
             imagePath: 'assets/images/launchers/epic_games/logo.svg'
           ),
-          description: null, // TODO: try to download it. If all fails, leave null. 
-          imagePath: null, // TODO: try to download it. If all fails, leave null. 
+          description: null, // Get this later as a background process.
+          imagePath: null, // Get this later as a background process.
           installSize: jsonContents['InstallSize'] as int, 
           version: jsonContents['AppVersionString'] as String
           ));
@@ -43,11 +47,9 @@ class LocalEpicGamesRetriever extends BaseLocalGameRetriever {
           title: jsonContents['DisplayName'] as String, 
           appId: jsonContents['CatalogItemId'] as String,
           parentAppId: jsonContents['MainGameCatalogItemId'] as String,
-          imagePath: null, // TODO: try to download it. If all fails, leave null. 
+          imagePath: null, // Get this later as a background process.
           installSize: jsonContents['InstallSize'] as int
         ));
-      } else { // Manifest doesn't belong to a game or DLC.
-        // TODO: Log "Sync can't do anything with non-game or -DLC manifest files, AppCategories are $appCategories".
       }
     }
 

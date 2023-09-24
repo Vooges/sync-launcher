@@ -5,10 +5,10 @@ import 'package:sync_launcher/models/dlc_info.dart';
 import 'package:sync_launcher/models/game_info.dart';
 import 'package:sync_launcher/models/launcher_info.dart';
 import 'package:sync_launcher/retrievers/local/base_local_retriever.dart';
-import 'package:sync_launcher/retrievers/local/steam/local_steam_metadata_retriever.dart';
+import 'package:sync_launcher/retrievers/metadata/steam/local_metadata_retriever.dart';
 
 class LocalSteamRetriever extends BaseLocalGameRetriever {
-  final LocalSteamMetadataRetriever metadataRetriever = LocalSteamMetadataRetriever(installPath: 'C:\\Program Files (x86)\\Steam');
+  final LocalMetadataRetriever metadataRetriever = LocalMetadataRetriever(installPath: 'C:\\Program Files (x86)\\Steam');
 
   LocalSteamRetriever() : super(manifestLocation: 'C:\\Program Files (x86)\\Steam\\steamapps');
 
@@ -21,7 +21,6 @@ class LocalSteamRetriever extends BaseLocalGameRetriever {
     for (File manifest in manifests) {
       String acfContents = await manifest.readAsString();
 
-      // TODO: Check if other data is stored elsewhere.
       dynamic jsonContents = _acfToJson(acfContents);
 
       // TODO: Check if app is a game.
@@ -34,7 +33,7 @@ class LocalSteamRetriever extends BaseLocalGameRetriever {
             title: 'Steam', 
             imagePath: 'assets/images/launchers/steam/logo.svg'
           ),
-          imagePath: await metadataRetriever.getImagePath(appId: jsonContents['appid'] as String),
+          imagePath: metadataRetriever.getImagePath(appId: jsonContents['appid'] as String),
           description: await metadataRetriever.getDescription(appId: jsonContents['appid'] as String),
           installSize: int.parse(jsonContents['SizeOnDisk'] as String),
           version: jsonContents['buildid'] as String,
@@ -43,8 +42,6 @@ class LocalSteamRetriever extends BaseLocalGameRetriever {
             parentAppId: jsonContents['appid'] as String
           )
         ));
-      } else {
-        // TODO: Log "App with appId $appId is not a game. Could also just ignore it."
       }
     }
 
