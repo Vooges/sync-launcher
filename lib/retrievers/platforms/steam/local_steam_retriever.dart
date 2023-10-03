@@ -52,7 +52,7 @@ class LocalSteamRetriever extends BaseGameRetriever {
   /// 
   /// Retrieves the manifest files for the installed apps.
   Future<Iterable<File>> _getManifests() async {
-    final Directory manifestDirectory = Directory(super.manifestLocation);
+    final Directory manifestDirectory = Directory(super.manifestLocation ?? '');
     final Iterable<File> manifests = (await manifestDirectory.list().toList())
       .whereType<File>().where((element) => element.path.contains('appmanifest_'));
 
