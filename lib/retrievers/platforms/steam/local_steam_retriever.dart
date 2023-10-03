@@ -4,10 +4,10 @@ import 'dart:io';
 import 'package:sync_launcher/models/dlc_info.dart';
 import 'package:sync_launcher/models/game_info.dart';
 import 'package:sync_launcher/models/launcher_info.dart';
-import 'package:sync_launcher/retrievers/local/base_local_retriever.dart';
+import 'package:sync_launcher/retrievers/base_game_retriever.dart';
 import 'package:sync_launcher/retrievers/metadata/steam/local_metadata_retriever.dart';
 
-class LocalSteamRetriever extends BaseLocalGameRetriever {
+class LocalSteamRetriever extends BaseGameRetriever {
   final LocalMetadataRetriever metadataRetriever = LocalMetadataRetriever(installPath: 'C:\\Program Files (x86)\\Steam');
 
   LocalSteamRetriever() : super(manifestLocation: 'C:\\Program Files (x86)\\Steam\\steamapps');

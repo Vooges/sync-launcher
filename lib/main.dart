@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:sync_launcher/models/game_info.dart';
-import 'package:sync_launcher/retrievers/game_retriever.dart';
+import 'package:sync_launcher/game_retriever.dart';
 
 void main() {
   runApp(const MyApp());
