@@ -1,8 +1,8 @@
 import 'package:sync_launcher/models/game_info.dart';
 import 'package:sync_launcher/retrievers/base_game_retriever.dart';
 
-import 'retrievers/platforms/epic_games/local_epic_games_retriever.dart';
-import 'retrievers/platforms/steam/local_steam_retriever.dart';
+import 'platforms/epic_games/local_epic_games_retriever.dart';
+import 'platforms/steam/local_steam_retriever.dart';
 
 class GameRetriever {
   List<String> connectedLaunchers = ['Epic Games', 'Steam'];
