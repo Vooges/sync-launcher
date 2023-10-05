@@ -44,7 +44,10 @@ class _SyncScaffoldState extends State<SyncScaffold> {
         title: const Text('Sync'),
       ),
       body: SafeArea(
-        child: views.elementAt(_selectedIndex),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: views.elementAt(_selectedIndex),
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
