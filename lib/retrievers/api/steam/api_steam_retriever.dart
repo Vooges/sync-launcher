@@ -1,12 +1,12 @@
 import 'package:sync_launcher/models/launcher_info.dart';
-import 'package:sync_launcher/retrievers/base_game_retriever.dart';
+import 'package:sync_launcher/retrievers/base_api_game_retriever.dart';
 import 'package:xml/xml.dart' as xml;
 import 'package:http/http.dart' as http;
 
 import 'package:sync_launcher/models/game_info.dart';
 
-class APISteamRetriever extends BaseGameRetriever {
-  APISteamRetriever({required super.userId, required super.manifestLocation});
+class APISteamRetriever extends BaseAPIGameRetriever {
+  APISteamRetriever({required super.userId});
 
   @override
   Future<List<GameInfo>> retrieve() async {
@@ -33,8 +33,8 @@ class APISteamRetriever extends BaseGameRetriever {
           appId: appId,
           launchURL: storeLink,
           launcherInfo: LauncherInfo(
-            title: title,
-            imagePath: logo,
+            title:  'Steam',
+            imagePath: 'assets/launchers/steam/logo.svg',
           ),
           imagePath: logo,
           version: 'Unknown',

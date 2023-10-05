@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:sync_launcher/models/game_info.dart';
-import 'package:sync_launcher/game_retriever.dart';
+import 'package:sync_launcher/game_bootstrapper.dart';
 
 void main() {
   runApp(const MyApp());
@@ -59,13 +59,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  GameRetriever retriever;
+  GameBootstrapper retriever;
   List<GameInfo> gameInfo = List.empty();
 
-  _MyHomePageState() : retriever = GameRetriever();
+  _MyHomePageState() : retriever = GameBootstrapper();
 
   void _retrieveGames() async {
-    gameInfo = await retriever.retrieveGames();
+    //gameInfo = await retriever.retrieveGames();
 
     setState(() {
       // This call to setState tells the Flutter framework that something has
