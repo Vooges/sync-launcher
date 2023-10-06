@@ -54,6 +54,26 @@ class SqliteHandler {
     return result;
   }
 
+  Future<int> insert({required String table, required Map<String, Object?> values}) async {
+    Database database = await _openDatabase();
+
+    int id = await database.insert(table, values);
+
+    database.close();
+
+    return id;
+  }
+
+  Future<int> insertRaw({required String query}) async {
+    Database database = await _openDatabase();
+
+    int id = await database.rawInsert(query);
+
+    database.close();
+
+    return id;
+  }
+
   Future<Database> _openDatabase() async {
     return await databaseFactoryFfi.openDatabase(
       join(await getDatabasesPath(), _fileName),

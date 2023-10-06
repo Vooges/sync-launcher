@@ -28,7 +28,7 @@ class DLCInfo {
   imagePath = dlc['image_path'] as String?,
   installSize = dlc['installSize'] as int;
 
-  Map toJson(){
+  Map<String, Object?> toMap(){
     return {
       'id': id,
       'title': title,

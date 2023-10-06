@@ -29,18 +29,18 @@ class GameInfo {
     version = version ?? 'Unknown', 
     dlc = dlc ?? List.empty(growable: true);
 
-    GameInfo.fromMap({required Map<String, Object?> game, List<Map<String, Object?>>? dlc}) :
+    GameInfo.fromMap({required Map<String, Object?> game, List<DLCInfo>? dlc}) :
       id = game['id'] as int,
       title = game['title'] as String,
       appId = game['app_id'] as String,
       launchURL = game['launch_url'] as String,
       launcherInfo = LauncherInfo(title: game['launcher_title'] as String, imagePath: game['launcher_image_path'] as String),
       description = game['description'] as String?,
-      dlc = dlc != null ? dlc.map((e) => DLCInfo.fromMap(dlc: e)).toList() : List.empty(growable: true),
+      dlc = dlc ?? List.empty(growable: true),
       installSize = game['install_size'] as int,
       version = game['version'] as String;
 
-    Map toJson(){
+    Map<String, Object?> toMap(){
       return {
         'id': id,
         'title': title,

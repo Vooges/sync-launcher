@@ -1,6 +1,6 @@
-import 'dart:convert';
 import 'dart:io';
 
+import 'package:sync_launcher/helpers/acf_converter.dart';
 import 'package:sync_launcher/models/dlc_info.dart';
 import 'package:sync_launcher/models/game_info.dart';
 import 'package:sync_launcher/models/launcher_info.dart';
@@ -21,7 +21,7 @@ class LocalSteamRetriever extends BaseLocalGameRetriever {
     for (File manifest in manifests) {
       String acfContents = await manifest.readAsString();
 
-      dynamic jsonContents = _acfToJson(acfContents);
+      dynamic jsonContents = ACFConverter.acfToJson(acfContents);
 
       foundGames.add(GameInfo(
         title: jsonContents['name'] as String, 
@@ -54,30 +54,6 @@ class LocalSteamRetriever extends BaseLocalGameRetriever {
       .whereType<File>().where((element) => element.path.contains('appmanifest_'));
 
     return manifests;
-  }
-
-  /// Turns the provided acf string to valid JSON.
-  dynamic _acfToJson(String acf){
-    // Replace newlines with commas.
-    acf = acf.replaceAll(RegExp(r'(\r\n|\r|\n)'), ',');
-    // Remove tab characters.
-    acf = acf.replaceAll('	', '');
-    // Fix key and value pair for simple values by adding a colon.
-    acf = acf.replaceAll('""','": "');
-    // Remove comma added by the first step.
-    acf = acf.replaceAll('{,', '{');
-    // Remove "AppState" + the comma added by step 1 at the beginning.
-    acf = acf.replaceFirst('"AppState",', '');
-    // Fix key and value pair for object values by removing comma added in step 1 and adding a colon.
-    acf = acf.replaceAll('",{', '":{');
-    // Remove trailing commas on simple values.
-    acf = acf.replaceAll(',}', '}');
-    // Remove trailing commas on object values.
-    acf = acf.replaceAll('},}', '}}');
-    // Removes final trailing comma.
-    acf = acf.substring(0, acf.length - 1);
-
-    return jsonDecode(acf);
   }
 
   /// Finds the dlc for the game.

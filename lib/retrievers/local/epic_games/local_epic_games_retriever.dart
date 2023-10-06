@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:collection/collection.dart'; // https://stackoverflow.com/questions/26504074/adding-orelse-function-to-firstwhere-method#answer-66956466
@@ -75,7 +76,7 @@ class LocalEpicGamesRetriever extends BaseLocalGameRetriever {
       GameInfo? game = gameInfo.firstWhereOrNull((element) => element.appId == dlc.parentAppId);
 
       if (game == null){
-        // TODO: log "Couldn't find base game with appId $dlc.parentAppId for DLC $dlc.title".
+        log("Couldn't find base game with appId ${dlc.parentAppId} for DLC ${dlc.title}");
 
         continue;
       }
