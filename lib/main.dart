@@ -65,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
   _MyHomePageState() : retriever = GameBootstrapper();
 
   void _retrieveGames() async {
-    //gameInfo = await retriever.retrieveGames();
+    gameInfo = await retriever.bootstrap();
 
     setState(() {
       // This call to setState tells the Flutter framework that something has

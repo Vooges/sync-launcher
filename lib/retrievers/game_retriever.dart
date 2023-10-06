@@ -10,7 +10,7 @@ class GameRetriever {
 
   GameRetriever({this.apiRetriever, required this.localRetriever});
 
-  Future<void> retrieveGames() async {
+  Future<List<GameInfo>> retrieveGames() async {
     List<GameInfo> foundGames = List.empty(growable: true);
 
     if (apiRetriever != null){
@@ -26,5 +26,6 @@ class GameRetriever {
     }
 
     // TODO: Add foundGames to a database.
+    return foundGames;
   }
 }

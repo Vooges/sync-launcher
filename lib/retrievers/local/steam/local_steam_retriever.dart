@@ -23,26 +23,23 @@ class LocalSteamRetriever extends BaseLocalGameRetriever {
 
       dynamic jsonContents = _acfToJson(acfContents);
 
-      // TODO: Check if app is a game.
-      if (jsonContents['appid'] == '491950' || jsonContents['appid'] == '203770') {
-        foundGames.add(GameInfo(
-          title: jsonContents['name'] as String, 
-          appId: jsonContents['appid'] as String, 
-          launchURL: _buildGameLaunchURL(appId: jsonContents['appid'] as String), 
-          launcherInfo: LauncherInfo(
-            title: 'Steam', 
-            imagePath: 'assets/images/launchers/steam/logo.svg'
-          ),
-          imagePath: metadataRetriever.getImagePath(appId: jsonContents['appid'] as String),
-          description: await metadataRetriever.getDescription(appId: jsonContents['appid'] as String),
-          installSize: int.parse(jsonContents['SizeOnDisk'] as String),
-          version: jsonContents['buildid'] as String,
-          dlc: _getDLCInfo(
-            installedDepots: jsonContents['InstalledDepots'] as Map<String, dynamic>, 
-            parentAppId: jsonContents['appid'] as String
-          )
-        ));
-      }
+      foundGames.add(GameInfo(
+        title: jsonContents['name'] as String, 
+        appId: jsonContents['appid'] as String, 
+        launchURL: _buildGameLaunchURL(appId: jsonContents['appid'] as String), 
+        launcherInfo: LauncherInfo(
+          title: 'Steam', 
+          imagePath: 'assets/images/launchers/steam/logo.svg'
+        ),
+        imagePath: metadataRetriever.getImagePath(appId: jsonContents['appid'] as String),
+        description: await metadataRetriever.getDescription(appId: jsonContents['appid'] as String),
+        installSize: int.parse(jsonContents['SizeOnDisk'] as String),
+        version: jsonContents['buildid'] as String,
+        dlc: _getDLCInfo(
+          installedDepots: jsonContents['InstalledDepots'] as Map<String, dynamic>, 
+          parentAppId: jsonContents['appid'] as String
+        )
+      ));
     }
 
     return foundGames;
