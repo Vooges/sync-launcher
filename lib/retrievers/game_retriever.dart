@@ -22,10 +22,13 @@ class GameRetriever {
     }
 
     if (foundGames.isEmpty){
-      foundGames.addAll(await localRetriever.retrieve());
+      try {
+        foundGames.addAll(await localRetriever.retrieve());
+      } catch (exception) {
+        log(exception.toString());
+      }
     }
 
-    // TODO: Add foundGames to a database.
     return foundGames;
   }
 }

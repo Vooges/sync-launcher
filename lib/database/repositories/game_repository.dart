@@ -32,7 +32,7 @@ class GameRepository extends BaseRepository{
     return results.map((e) => ReducedGameInfo.fromMap(game: e)).toList();
   }
 
-  Future<GameInfo> getSingleGameInfo({required int id}) async{
+  Future<GameInfo> getSingleGameInfo({required int id}) async {
     String query = '''
       SELECT 
         g.id, 
