@@ -1,13 +1,13 @@
 class DatabaseScripts {
   static const String create = '''
     CREATE TABLE launchers (
-      id INTEGER PRIMARY KEY,
-      value TEXT NOT NULL,
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      title TEXT NOT NULL,
       image_path TEXT NOT NULL
     );
 
     CREATE TABLE games (
-      id INTEGER PRIMARY KEY,
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
       app_id TEXT NOT NULL,
       title TEXT NOT NULL,
       launch_url TEXT NOT NULL,
@@ -21,7 +21,7 @@ class DatabaseScripts {
     );
 
     CREATE TABLE dlc (
-      id INTEGER PRIMARY KEY,
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
       app_id TEXT NOT NULL,
       title TEXT NOT NULL,
       parent_id INTEGER NOT NULL,
@@ -33,7 +33,7 @@ class DatabaseScripts {
     );
 
     CREATE TABLE users (
-      id INTEGER PRIMARY KEY,
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
       unique_launcher_identifier STRING NOT NULL,
       launcher_id INTEGER NOT NULL,
 
@@ -41,12 +41,18 @@ class DatabaseScripts {
     );
 
     CREATE TABLE sessions (
-      id INTEGER PRIMARY KEY,
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
       game_id INTEGER NOT NULL,
       start_time INTEGER NOT NULL,
       end_time INTEGER NOT NULL,
 
       FOREIGN KEY (game_id) REFERENCES games(id)
     );
+  ''';
+
+  static const String insertLaunchers = '''
+    INSERT INTO launchers VALUES
+      (NULL, 'Steam', 'lib/assets/images/launchers/steam/logo.svg'),
+      (NULL, 'Epic Games', 'lib/assets/images/launchers/epic_games/logo.svg');
   ''';
 }

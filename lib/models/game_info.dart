@@ -34,7 +34,7 @@ class GameInfo {
       title = game['title'] as String,
       appId = game['app_id'] as String,
       launchURL = game['launch_url'] as String,
-      launcherInfo = LauncherInfo(title: game['launcher_title'] as String, imagePath: game['launcher_image_path'] as String),
+      launcherInfo = LauncherInfo(id: game['launcher_id'] as int, title: game['launcher_title'] as String, imagePath: game['launcher_image_path'] as String),
       description = game['description'] as String?,
       dlc = dlc ?? List.empty(growable: true),
       installSize = game['install_size'] as int,
@@ -45,13 +45,13 @@ class GameInfo {
         'id': id,
         'title': title,
         'description': description,
-        'launchUrl': launchURL,
+        'launch_url': launchURL,
         'image_path': imagePath,
         'app_id': appId,
         'version': version,
         'install_size': installSize,
         'dlc': dlc,
-        'launcher': launcherInfo
+        'launcher': launcherInfo.toMap()
       };
     }
 }

@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:sync_launcher/controllers/game_controller.dart';
 import 'package:sync_launcher/models/game_info.dart';
 import 'package:sync_launcher/game_bootstrapper.dart';
+import 'package:sync_launcher/models/reduced_game_info.dart';
 
 void main() {
   runApp(const MyApp());
@@ -59,13 +61,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  GameBootstrapper retriever;
-  List<GameInfo> gameInfo = List.empty();
+  GameController controller = GameController();
+  List<ReducedGameInfo> gameInfo = List.empty();
+  GameBootstrapper bootstrapper = GameBootstrapper();
 
-  _MyHomePageState() : retriever = GameBootstrapper();
+  _MyHomePageState(){
+    bootstrapper.bootstrap();
+  }
 
   void _retrieveGames() async {
-    gameInfo = await retriever.bootstrap();
+    gameInfo = await controller.index();
 
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -94,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Text(jsonEncode(gameInfo)),
+      body: Text(jsonEncode(gameInfo, toEncodable: (e) => (e as ReducedGameInfo).toMap())),
       floatingActionButton: FloatingActionButton(
         onPressed: _retrieveGames,
         tooltip: 'Retrieve games locally',

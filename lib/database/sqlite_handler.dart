@@ -1,17 +1,19 @@
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:path/path.dart';
 import 'package:sync_launcher/database/database_scripts.dart';
 
 class SqliteHandler {
-  static final SqliteHandler _instance = SqliteHandler._internal();
+  static SqliteHandler? _instance;
   final String _fileName = 'sync.db';
 
   SqliteHandler._internal(){
     sqfliteFfiInit();
+
+    databaseFactory = databaseFactoryFfi;
   }
 
   factory SqliteHandler(){
-    return _instance;
+    _instance ??= SqliteHandler._internal();
+    return _instance!;
   }
   
   Future<List<Map<String, Object?>>> selectRaw({required String query, List<Object?>? parameters}) async{
@@ -76,11 +78,12 @@ class SqliteHandler {
 
   Future<Database> _openDatabase() async {
     return await databaseFactoryFfi.openDatabase(
-      join(await getDatabasesPath(), _fileName),
+      _fileName,
       options: OpenDatabaseOptions(
         version: 1,
         onCreate: (Database database, int version) async {
           await database.execute(DatabaseScripts.create);
+          await database.execute(DatabaseScripts.insertLaunchers);
         }
       )
     );

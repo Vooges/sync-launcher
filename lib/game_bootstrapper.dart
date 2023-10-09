@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:sync_launcher/database/repositories/game_repository.dart';
 import 'package:sync_launcher/models/game_info.dart';
 import 'package:sync_launcher/retrievers/api/steam/api_steam_retriever.dart';
 import 'package:sync_launcher/retrievers/game_retriever.dart';
@@ -11,8 +14,10 @@ class GameBootstrapper {
     'Steam': GameRetriever(apiRetriever: APISteamRetriever(userId: '76561198440106475'), localRetriever: LocalSteamRetriever())
   };
 
+  final GameRepository _gameRepository = GameRepository();
+
   /// Retrieves all games for the connected launchers.
-  Future<List<GameInfo>> bootstrap() async {
+  Future<void> bootstrap() async {
     final List<GameInfo> foundGames = List.empty(growable: true);
 
     for (String launcher in connectedLaunchers) {
@@ -21,7 +26,10 @@ class GameBootstrapper {
       foundGames.addAll(await retriever.retrieveGames());
     }
 
-    // TODO: put foundGames in the database.
-    return foundGames;
+    try {
+      _gameRepository.insertMultiple(gameList: foundGames);
+    } catch (exception){
+      log(exception.toString());
+    }
   }
 }

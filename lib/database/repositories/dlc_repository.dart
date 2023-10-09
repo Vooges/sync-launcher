@@ -16,7 +16,7 @@ class DLCRepository extends BaseRepository {
       WHERE id = ?
     ''';
 
-    Map<String, Object?> dlcMap = (await super.sqliteHandler.selectRaw(query: query, parameters: List.of([id])))[0];
+    Map<String, Object?> dlcMap = (await super.sqliteHandler.selectRaw(query: query, parameters: [id]))[0];
 
     return DLCInfo.fromMap(dlc: dlcMap);
   }
@@ -35,13 +35,15 @@ class DLCRepository extends BaseRepository {
       WHERE parent_id = ?
     ''';
 
-    List<Map<String, Object?>> dlcMap = (await super.sqliteHandler.selectRaw(query: query, parameters: List.of([gameId])));
+    List<Map<String, Object?>> dlcMap = (await super.sqliteHandler.selectRaw(query: query, parameters: [gameId]));
 
     return dlcMap.map((e) => DLCInfo.fromMap(dlc: e)).toList();
   }
 
   Future<int> insert({required DLCInfo dlcInfo}) async {
     Map<String, Object?> dlcMap = dlcInfo.toMap();
+
+    dlcMap['id'] = null;
 
     return await super.sqliteHandler.insert(table: 'dlc', values: dlcMap);
   }

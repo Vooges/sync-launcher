@@ -11,7 +11,7 @@ class LauncherInfo {
 
   LauncherInfo.fromMap({required Map<String, Object?> launcher}) :
     id = launcher['id'] as int,
-    title = launcher['value'] as String,
+    title = launcher['title'] as String,
     imagePath = launcher['image_path'] as String;
 
   Map<String, Object?> toMap(){
