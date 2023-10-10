@@ -1,12 +1,12 @@
 import 'package:sync_launcher/models/launcher_info.dart';
-import 'package:sync_launcher/retrievers/base_game_retriever.dart';
+import 'package:sync_launcher/retrievers/api/base_api_game_retriever.dart';
 import 'package:xml/xml.dart' as xml;
 import 'package:http/http.dart' as http;
 
 import 'package:sync_launcher/models/game_info.dart';
 
-class APISteamRetriever extends BaseGameRetriever {
-  APISteamRetriever({required super.userId, required super.manifestLocation});
+class APISteamRetriever extends BaseAPIGameRetriever {
+  APISteamRetriever({required super.userId});
 
   @override
   Future<List<GameInfo>> retrieve() async {
@@ -15,6 +15,12 @@ class APISteamRetriever extends BaseGameRetriever {
 
     if (response.statusCode == 200) {
       final xmlDoc = xml.XmlDocument.parse(response.body);
+
+      // Steam returns a 200 aswell if the user can't be found. The response given in that case contains a response element with the error element inside.
+      final responseElement = xmlDoc.findElements('response').firstOrNull;
+      if (responseElement != null) {
+        throw Exception(responseElement.findElements('error').firstOrNull ?? 'Unable to get data for user $userId');
+      }
 
       final games = xmlDoc.findAllElements('game');
       final gameInfoList = <GameInfo>[];
@@ -33,15 +39,15 @@ class APISteamRetriever extends BaseGameRetriever {
           appId: appId,
           launchURL: storeLink,
           launcherInfo: LauncherInfo(
-            title: title,
-            imagePath: logo,
+            title:  'Steam',
+            imagePath: 'assets/launchers/steam/logo.svg',
           ),
           imagePath: logo,
           version: 'Unknown',
-          // Add version if available.
+          // TODO: Add version if available.
           installSize: 0,
-          // Add install size if available.
-          dlc: [], // Add DLC info if available.
+          // TODO: Add install size if available.
+          dlc: [], // TODO: Add DLC info if available.
         );
 
         gameInfoList.add(gameInfo);

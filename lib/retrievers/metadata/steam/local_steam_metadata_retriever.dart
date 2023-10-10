@@ -3,11 +3,11 @@ import 'dart:io';
 
 import 'package:collection/collection.dart';
 
-class LocalMetadataRetriever {
+class LocalSteamMetadataRetriever {
   final String installPath;
   final String userId = '479840747';
 
-  LocalMetadataRetriever({required this.installPath});
+  LocalSteamMetadataRetriever({required this.installPath});
 
   /// Attempts to get the description for the app.
   /// 
@@ -24,13 +24,15 @@ class LocalMetadataRetriever {
 
     dynamic jsonContents = jsonDecode(await appCache.readAsString());
 
-    int key = 0;
+    int key = -1;
 
     for (dynamic element in jsonContents as List<dynamic>) {
       if (element[0] == 'descriptions') key = jsonContents.indexOf(element);
     }
 
-    return (((jsonContents[key])[1])['data'])['strFullDescription'];
+    if (key == -1) return null; // Could not find descriptions object.
+
+    return (((jsonContents[key])[1])['data'])['strFullDescription']; // Description is in the language set in Steam.
   }
 
   /// Builds the image path.

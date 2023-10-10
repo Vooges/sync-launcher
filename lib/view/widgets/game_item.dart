@@ -17,14 +17,14 @@ class GameItem extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => GameView(
-                gameInfo: gameInfo,
+                gameInfo: gameInfo, // TODO: Needs to be call to gameController.get(id) to get the full game info.
               ),
             ),
           );
         },
         child: Column(
           children: [
-            Image.network(gameInfo.launcherInfo.imagePath),
+            Image.network(gameInfo.imagePath ?? ''),
             const SizedBox(
               height: 15,
             ),
@@ -33,7 +33,7 @@ class GameItem extends StatelessWidget {
               style: Theme.of(context).textTheme.headlineSmall,
             ),
             Text(
-              gameInfo.description,
+              gameInfo.description ?? 'Unknown',
               style: Theme.of(context).textTheme.labelMedium,
             ),
           ],

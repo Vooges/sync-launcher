@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sync_launcher/view/home_view.dart';
-
-import 'view/settings_view.dart';
+import 'package:sync_launcher/view/settings_view.dart';
 
 void main() {
   runApp(const MyApp());

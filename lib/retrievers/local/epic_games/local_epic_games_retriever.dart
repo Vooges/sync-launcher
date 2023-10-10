@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:collection/collection.dart'; // https://stackoverflow.com/questions/26504074/adding-orelse-function-to-firstwhere-method#answer-66956466
@@ -6,9 +7,9 @@ import 'package:collection/collection.dart'; // https://stackoverflow.com/questi
 import 'package:sync_launcher/models/dlc_info.dart';
 import 'package:sync_launcher/models/game_info.dart';
 import 'package:sync_launcher/models/launcher_info.dart';
-import 'package:sync_launcher/retrievers/base_game_retriever.dart';
+import 'package:sync_launcher/retrievers/local/base_local_game_retriever.dart';
 
-class LocalEpicGamesRetriever extends BaseGameRetriever {
+class LocalEpicGamesRetriever extends BaseLocalGameRetriever {
   LocalEpicGamesRetriever() : super(manifestLocation: 'C:\\ProgramData\\Epic\\EpicGamesLauncher\\Data\\Manifests');
 
   @override
@@ -60,7 +61,7 @@ class LocalEpicGamesRetriever extends BaseGameRetriever {
   /// 
   /// Retrieves the manifest files for the installed apps.
   Future<Iterable<File>> _getManifests() async {
-    final Directory manifestDirectory = Directory(super.manifestLocation ?? '');
+    final Directory manifestDirectory = Directory(super.manifestLocation);
     final Iterable<File> manifests = (await manifestDirectory.list().toList()).whereType<File>();
 
     return manifests;
@@ -75,7 +76,7 @@ class LocalEpicGamesRetriever extends BaseGameRetriever {
       GameInfo? game = gameInfo.firstWhereOrNull((element) => element.appId == dlc.parentAppId);
 
       if (game == null){
-        // TODO: log "Couldn't find base game with appId $dlc.parentAppId for DLC $dlc.title".
+        log("Couldn't find base game with appId ${dlc.parentAppId} for DLC ${dlc.title}");
 
         continue;
       }

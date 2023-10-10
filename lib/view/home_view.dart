@@ -12,13 +12,15 @@ class HomeView extends StatelessWidget {
       title: 'CSGO',
       appId: '730',
       launchURL: 'steam://rungameid:730',
+      imagePath: 'https://upload.wikimedia.org/wikipedia/en/6/6e/CSGOcoverMarch2020.jpg',
       launcherInfo: LauncherInfo(
-        title: 'Counter Strike: Global Offensive',
+        title: 'Steam',
         imagePath:
-            'https://upload.wikimedia.org/wikipedia/en/6/6e/CSGOcoverMarch2020.jpg',
+            '/assets/images/launchers/steam/logo.svg',
       ),
     );
 
+    // TODO: gameController.index()
     final games = List.of([csgo, csgo, csgo, csgo, csgo, csgo, csgo, csgo]);
 
     double screenWidth = MediaQuery.of(context).size.width;
