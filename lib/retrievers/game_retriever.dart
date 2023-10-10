@@ -1,8 +1,8 @@
 import 'dart:developer';
 
 import 'package:sync_launcher/models/game_info.dart';
-import 'package:sync_launcher/retrievers/base_api_game_retriever.dart';
-import 'package:sync_launcher/retrievers/base_local_game_retriever.dart';
+import 'package:sync_launcher/retrievers/api/base_api_game_retriever.dart';
+import 'package:sync_launcher/retrievers/local/base_local_game_retriever.dart';
 
 class GameRetriever {
   BaseAPIGameRetriever? apiRetriever;

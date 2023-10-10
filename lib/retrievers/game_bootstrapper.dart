@@ -16,7 +16,7 @@ class GameBootstrapper {
 
   final GameRepository _gameRepository = GameRepository();
 
-  /// Retrieves all games for the connected launchers.
+  /// Retrieves all games for the connected launchers and adds the to the database.
   Future<void> bootstrap() async {
     final List<GameInfo> foundGames = List.empty(growable: true);
 
@@ -26,8 +26,13 @@ class GameBootstrapper {
       foundGames.addAll(await retriever.retrieveGames());
     }
 
+    await _insertIntoDatabase(gameList: foundGames);
+  }
+
+  /// Inserts the provided list of games into the database.
+  Future<void> _insertIntoDatabase({required List<GameInfo> gameList}) async {
     try {
-      _gameRepository.insertMultiple(gameList: foundGames);
+      _gameRepository.insertMultiple(gameList: gameList);
     } catch (exception){
       log(exception.toString());
     }

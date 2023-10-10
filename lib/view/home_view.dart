@@ -20,6 +20,7 @@ class HomeView extends StatelessWidget {
       ),
     );
 
+    // TODO: gameController.index()
     final games = List.of([csgo, csgo, csgo, csgo, csgo, csgo, csgo, csgo]);
 
     double screenWidth = MediaQuery.of(context).size.width;

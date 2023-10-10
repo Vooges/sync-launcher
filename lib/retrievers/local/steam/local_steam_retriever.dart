@@ -4,7 +4,7 @@ import 'package:sync_launcher/helpers/acf_converter.dart';
 import 'package:sync_launcher/models/dlc_info.dart';
 import 'package:sync_launcher/models/game_info.dart';
 import 'package:sync_launcher/models/launcher_info.dart';
-import 'package:sync_launcher/retrievers/base_local_game_retriever.dart';
+import 'package:sync_launcher/retrievers/local/base_local_game_retriever.dart';
 import 'package:sync_launcher/retrievers/metadata/steam/local_steam_metadata_retriever.dart';
 
 class LocalSteamRetriever extends BaseLocalGameRetriever {

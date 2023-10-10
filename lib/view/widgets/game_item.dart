@@ -17,7 +17,7 @@ class GameItem extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => GameView(
-                gameInfo: gameInfo,
+                gameInfo: gameInfo, // TODO: Needs to be call to gameController.get(id) to get the full game info.
               ),
             ),
           );

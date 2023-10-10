@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:sync_launcher/models/game_info.dart';
 
@@ -18,7 +16,7 @@ class GameView extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(gameInfo.imagePath ?? ''),
+                  image: NetworkImage(gameInfo.imagePath ?? ''), // TODO: set default image.
                   fit: BoxFit.cover,
                 ),
               ),
