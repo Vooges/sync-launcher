@@ -7,7 +7,7 @@ import 'package:collection/collection.dart'; // https://stackoverflow.com/questi
 import 'package:sync_launcher/models/dlc_info.dart';
 import 'package:sync_launcher/models/game_info.dart';
 import 'package:sync_launcher/models/launcher_info.dart';
-import 'package:sync_launcher/retrievers/base_local_game_retriever.dart';
+import 'package:sync_launcher/retrievers/local/base_local_game_retriever.dart';
 
 class LocalEpicGamesRetriever extends BaseLocalGameRetriever {
   LocalEpicGamesRetriever() : super(manifestLocation: 'C:\\ProgramData\\Epic\\EpicGamesLauncher\\Data\\Manifests');
