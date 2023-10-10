@@ -35,7 +35,7 @@ class HomeView extends StatelessWidget {
       itemBuilder: (_, i) {
         final current = games.elementAt(i);
 
-        return GameItem(
+        return GameItemWidget(
           gameInfo: current,
         );
       },

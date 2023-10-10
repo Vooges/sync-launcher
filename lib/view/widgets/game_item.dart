@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:sync_launcher/models/game_info.dart';
 import 'package:sync_launcher/view/game_view.dart';
 
-class GameItem extends StatelessWidget {
+class GameItemWidget extends StatelessWidget {
   final GameInfo gameInfo;
 
-  const GameItem({super.key, required this.gameInfo});
+  const GameItemWidget({super.key, required this.gameInfo});
 
   @override
   Widget build(BuildContext context) {
