@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sync_launcher/view/home_view.dart';
 import 'package:sync_launcher/view/settings_view.dart';
+import 'package:sync_launcher/view/widgets/status_bar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Sync',
       theme: ThemeData(
-        colorSchemeSeed: Colors.indigo,
+        colorSchemeSeed: const Color.fromRGBO(116, 17, 178, 100),
         brightness: Brightness.dark,
         useMaterial3: true,
       ),
@@ -38,9 +39,9 @@ class _SyncScaffoldState extends State<SyncScaffold> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Sync'),
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(70),
+        child: StatusBar()
       ),
       body: SafeArea(
         child: Padding(
