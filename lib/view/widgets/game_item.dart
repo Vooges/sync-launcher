@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:sync_launcher/models/game_info.dart';
+import 'package:sync_launcher/models/launcher_info.dart';
+import 'package:sync_launcher/models/reduced_game_info.dart';
 import 'package:sync_launcher/view/game_view.dart';
 
 class GameItem extends StatelessWidget {
-  final GameInfo gameInfo;
+  final ReducedGameInfo reducedGameInfo;
 
-  const GameItem({super.key, required this.gameInfo});
+  const GameItem({super.key, required this.reducedGameInfo});
 
   @override
   Widget build(BuildContext context) {
@@ -17,25 +19,39 @@ class GameItem extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => GameView(
-                gameInfo: gameInfo, // TODO: Needs to be call to gameController.get(id) to get the full game info.
+                gameId: reducedGameInfo.id
               ),
             ),
           );
         },
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Image.network(gameInfo.imagePath ?? ''),
-            const SizedBox(
-              height: 15,
+            // FadeInImage.assetNetwork(
+            //   placeholder: 'assets/images/games/default_cover.png', 
+            //   image: reducedGameInfo.imagePath ?? 'assets/images/games/default_cover.png',
+            //   height: 300,
+            //   fit: BoxFit.fitWidth,
+            // ),
+            Image.network(
+              reducedGameInfo.imagePath ?? '',
+              height: 300,
+              fit: BoxFit.fitWidth,
+              errorBuilder: ((context, error, stackTrace) {
+                return Image.asset(
+                  'assets/images/games/default_cover.png',
+                  height: 300,
+                  fit: BoxFit.fitWidth,
+                );
+              }),
             ),
-            Text(
-              gameInfo.title,
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-            Text(
-              gameInfo.description ?? 'Unknown',
-              style: Theme.of(context).textTheme.labelMedium,
-            ),
+            Padding(
+              padding: const EdgeInsets.all(15),
+              child: Text(
+                reducedGameInfo.title,
+                style: Theme.of(context).textTheme.titleMedium,
+              )
+            )
           ],
         ),
       ),

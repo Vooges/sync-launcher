@@ -39,6 +39,7 @@ class GameRepository extends BaseRepository{
         g.title, 
         g.app_id, 
         g.launch_url, 
+        g.image_path,
         l.id as launcher_id, 
         l.title as launcher_title, 
         l.image_path as launcher_image_path, 
