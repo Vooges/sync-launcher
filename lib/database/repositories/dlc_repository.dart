@@ -57,4 +57,12 @@ class DLCRepository extends BaseRepository {
 
     return ids;
   }
+
+  Future<int> deleteAll() async{
+    String query = '''
+      DELETE FROM dlc;
+    ''';
+
+    return await super.sqliteHandler.deleteRaw(query: query);
+  }
 }

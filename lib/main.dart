@@ -34,7 +34,7 @@ class SyncScaffold extends StatefulWidget {
 class _SyncScaffoldState extends State<SyncScaffold> {
   int _selectedIndex = 0;
 
-  final views = List.of([const HomeView(), const SettingsView()]);
+  final views = List.of([HomeView(), const SettingsView()]);
 
   @override
   Widget build(BuildContext context) {

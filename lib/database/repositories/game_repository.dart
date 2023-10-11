@@ -39,6 +39,7 @@ class GameRepository extends BaseRepository{
         g.title, 
         g.app_id, 
         g.launch_url, 
+        g.image_path,
         l.id as launcher_id, 
         l.title as launcher_title, 
         l.image_path as launcher_image_path, 
@@ -68,9 +69,10 @@ class GameRepository extends BaseRepository{
     gameMap.remove('launcher');
 
     // TODO: Get this from the launcher repository for clean code's sake.
-    int launcherId = (await super.sqliteHandler.selectRaw(query: 'SELECT id FROM launchers WHERE title LIKE ?', parameters:List.from([launcher.title])))[0]['id'] as int;
+    int launcherId = (await super.sqliteHandler.selectRaw(query: 'SELECT id FROM launchers WHERE title LIKE ?', parameters: List.from([launcher.title])))[0]['id'] as int;
     gameMap['launcher_id'] = launcherId;
 
+    // Prevents primary key constraint failure.
     gameMap['id'] = null;
     int gameId = await super.sqliteHandler.insert(table: 'games', values: gameMap);
 
@@ -88,5 +90,15 @@ class GameRepository extends BaseRepository{
     }
 
     return ids;
+  }
+
+  Future<int> deleteAll() async{
+    await _dlcRepository.deleteAll();
+
+    String query = '''
+      DELETE FROM games;
+    ''';
+
+    return await super.sqliteHandler.deleteRaw(query: query);
   }
 }

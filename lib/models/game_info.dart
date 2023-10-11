@@ -33,6 +33,7 @@ class GameInfo {
       id = game['id'] as int,
       title = game['title'] as String,
       appId = game['app_id'] as String,
+      imagePath = game['image_path'] as String?,
       launchURL = game['launch_url'] as String,
       launcherInfo = LauncherInfo(id: game['launcher_id'] as int, title: game['launcher_title'] as String, imagePath: game['launcher_image_path'] as String),
       description = game['description'] as String?,

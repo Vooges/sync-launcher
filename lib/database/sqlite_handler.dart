@@ -76,6 +76,16 @@ class SqliteHandler {
     return id;
   }
 
+  Future<int> deleteRaw({required String query}) async {
+    Database database = await _openDatabase();
+
+    int count = await database.rawDelete(query);
+
+    database.close();
+
+    return count;
+  }
+
   Future<Database> _openDatabase() async {
     return await databaseFactoryFfi.openDatabase(
       _fileName,

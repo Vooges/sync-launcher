@@ -10,6 +10,7 @@ class APISteamRetriever extends BaseAPIGameRetriever {
 
   @override
   Future<List<GameInfo>> retrieve() async {
+    // TODO: Check if app is a game or DLC.
     final response = await http.get(Uri.parse(
         "https://steamcommunity.com/profiles/$userId/games?tab=all&xml=1"));
 
@@ -42,7 +43,7 @@ class APISteamRetriever extends BaseAPIGameRetriever {
             title:  'Steam',
             imagePath: 'assets/launchers/steam/logo.svg',
           ),
-          imagePath: logo,
+          imagePath: logo, // TODO: download the image, save it to assets, and set the path to the downloaded image.
           version: 'Unknown',
           // TODO: Add version if available.
           installSize: 0,
