@@ -41,7 +41,7 @@ class _SyncScaffoldState extends State<SyncScaffold> {
     return Scaffold(
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(70),
-        child: StatusBar()
+        child: StatusBarWidget()
       ),
       body: SafeArea(
         child: Padding(

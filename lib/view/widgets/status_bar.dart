@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class StatusBar extends StatelessWidget {
-  const StatusBar({super.key});
+class StatusBarWidget extends StatelessWidget {
+  const StatusBarWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

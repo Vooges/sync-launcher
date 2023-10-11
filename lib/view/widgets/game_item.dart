@@ -4,10 +4,10 @@ import 'package:sync_launcher/models/launcher_info.dart';
 import 'package:sync_launcher/models/reduced_game_info.dart';
 import 'package:sync_launcher/view/game_view.dart';
 
-class GameItem extends StatelessWidget {
+class GameItemWidget extends StatelessWidget {
   final ReducedGameInfo reducedGameInfo;
 
-  const GameItem({super.key, required this.reducedGameInfo});
+  const GameItemWidget({super.key, required this.reducedGameInfo});
 
   @override
   Widget build(BuildContext context) {
