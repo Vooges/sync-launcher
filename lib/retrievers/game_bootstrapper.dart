@@ -18,7 +18,7 @@ class GameBootstrapper {
       return "~/.steam/steam/";
     }
 
-    throw "platform not supported";
+    throw Exception("platform not supported");
   }
 
   /// Retrieves all games for the connected launchers and adds the to the database.
