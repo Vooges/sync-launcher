@@ -1,7 +1,7 @@
 import 'package:sync_launcher/retrievers/interfaces/retrieve_games.dart';
 
 abstract class BaseLocalGameRetriever implements RetrieveGames {
-  String manifestLocation;
+  String steamBasePath;
 
-  BaseLocalGameRetriever({required this.manifestLocation});
+  BaseLocalGameRetriever({required this.steamBasePath});
 }

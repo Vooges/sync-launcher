@@ -10,7 +10,7 @@ import 'package:sync_launcher/models/launcher_info.dart';
 import 'package:sync_launcher/retrievers/local/base_local_game_retriever.dart';
 
 class LocalEpicGamesRetriever extends BaseLocalGameRetriever {
-  LocalEpicGamesRetriever() : super(manifestLocation: 'C:\\ProgramData\\Epic\\EpicGamesLauncher\\Data\\Manifests');
+  LocalEpicGamesRetriever() : super(steamBasePath: 'C:\\ProgramData\\Epic\\EpicGamesLauncher\\Data\\Manifests');
 
   @override
   Future<List<GameInfo>> retrieve() async {
@@ -61,7 +61,7 @@ class LocalEpicGamesRetriever extends BaseLocalGameRetriever {
   /// 
   /// Retrieves the manifest files for the installed apps.
   Future<Iterable<File>> _getManifests() async {
-    final Directory manifestDirectory = Directory(super.manifestLocation);
+    final Directory manifestDirectory = Directory(super.steamBasePath);
     final Iterable<File> manifests = (await manifestDirectory.list().toList()).whereType<File>();
 
     return manifests;
