@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../models/game_info.dart';
 
@@ -6,6 +7,12 @@ class GameInfoWidget extends StatelessWidget {
   final GameInfo gameInfo;
 
   const GameInfoWidget({super.key, required this.gameInfo});
+
+  Future<void> _launchGame() async {
+    if (!await launchUrl(Uri.parse(gameInfo.launchURL))) {
+      throw Exception('could not launch game');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +31,7 @@ class GameInfoWidget extends StatelessWidget {
           height: 50,
         ),
         ElevatedButton(
-          onPressed: () => {},
+          onPressed: _launchGame,
           child: const Text('Launch'),
         )
       ],
