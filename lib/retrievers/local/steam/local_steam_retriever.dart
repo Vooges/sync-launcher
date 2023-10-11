@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:path/path.dart' as p;
+
 import 'package:sync_launcher/helpers/acf_converter.dart';
 import 'package:sync_launcher/models/dlc_info.dart';
 import 'package:sync_launcher/models/game_info.dart';
@@ -11,7 +13,7 @@ class LocalSteamRetriever extends BaseLocalGameRetriever {
   late final LocalSteamMetadataRetriever metadataRetriever;
 
   LocalSteamRetriever({required super.steamBasePath}) {
-    metadataRetriever = LocalSteamMetadataRetriever(steamBasePath: 'C:\\Program Files (x86)\\Steam');
+    metadataRetriever = LocalSteamMetadataRetriever(steamBasePath: steamBasePath);
   }
 
   @override
@@ -51,7 +53,7 @@ class LocalSteamRetriever extends BaseLocalGameRetriever {
   /// 
   /// Retrieves the manifest files for the installed apps.
   Future<Iterable<File>> _getManifests() async {
-    final Directory manifestDirectory = Directory(super.steamBasePath);
+    final Directory manifestDirectory = Directory(p.join(super.steamBasePath, '/steamapps'));
     final Iterable<File> manifests = (await manifestDirectory.list().toList())
       .whereType<File>().where((element) => element.path.contains('appmanifest_'));
 

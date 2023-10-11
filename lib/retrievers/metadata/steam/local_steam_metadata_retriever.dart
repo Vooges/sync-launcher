@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:path/path.dart' as p;
+
 import 'package:collection/collection.dart';
 
 class LocalSteamMetadataRetriever {
@@ -14,7 +16,7 @@ class LocalSteamMetadataRetriever {
   /// If the cache file for the app cannot be found, null is returned. 
   /// It also returns null if the descriptions object is missing.
   Future<String?> getDescription({required String appId}) async {
-    final String fullPath = '$steamBasePath\\userdata\\$userId\\config\\librarycache';
+    final String fullPath = p.join(steamBasePath, '/userdata/', userId, '/config/librarycache');
 
     final Directory libraryCacheDirectory = Directory(fullPath);
     final File? appCache = (await libraryCacheDirectory.list().toList()).whereType<File>()
@@ -37,6 +39,6 @@ class LocalSteamMetadataRetriever {
 
   /// Builds the image path.
   String getImagePath({required String appId}) {
-    return '$steamBasePath\\appcache\\librarycache\\${appId}_library_600x900.jpg';
+    return p.join(steamBasePath, '/appcache/librarycache/', '${appId}_library_600x900.jpg');
   }
 }
