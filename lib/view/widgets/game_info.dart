@@ -28,11 +28,22 @@ class GameInfoWidget extends StatelessWidget {
           style: Theme.of(context).textTheme.bodyMedium,
         ),
         const SizedBox(
-          height: 50,
+          height: 25,
         ),
-        ElevatedButton(
-          onPressed: _launchGame,
-          child: const Text('Launch'),
+        SizedBox(
+          width: 150,
+          height: 50,
+          child: ElevatedButton(
+            onPressed: _launchGame,
+            style: ButtonStyle(
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+            child: const Text('Launch'),
+          ),
         )
       ],
     );

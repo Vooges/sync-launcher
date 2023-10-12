@@ -43,15 +43,20 @@ class GameView extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(48.0),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      GameInfoWidget(gameInfo: gameInfo),
-                      const FriendsPlayingWidget(),
-                      const RelatedGamesWidget()
-                    ],
-                  ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    GameInfoWidget(gameInfo: gameInfo),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    const Expanded(child: FriendsPlayingWidget()),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    const Expanded(child: RelatedGamesWidget())
+                  ],
                 ),
               ),
             ];

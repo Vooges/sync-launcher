@@ -5,6 +5,13 @@ class RelatedGamesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Column(
+      children: [
+        Text(
+          'Related games',
+          style: Theme.of(context).textTheme.headlineMedium,
+        ),
+      ],
+    );
   }
 }
