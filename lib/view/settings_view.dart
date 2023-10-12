@@ -18,13 +18,13 @@ class _SettingsViewState extends State<SettingsView> {
         TextFormField(
           decoration: const InputDecoration(
             border: UnderlineInputBorder(),
-            labelText: 'Steam username',
+            labelText: 'Path to Steam installation',
           ),
         ),
         TextFormField(
           decoration: const InputDecoration(
             border: UnderlineInputBorder(),
-            labelText: 'Epic username',
+            labelText: 'Path to Epic installation',
           ),
         ),
         const SizedBox(height: 25),
