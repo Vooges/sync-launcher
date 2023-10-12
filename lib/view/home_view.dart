@@ -19,37 +19,50 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    int crossAxisCount = (screenWidth / 200).floor(); // Assuming each game item has a width of 200, adjust this value according to your item width
+    int crossAxisCount = (screenWidth / 200)
+        .floor(); // Assuming each game item has a width of 200, adjust this value according to your item width
 
     return FutureBuilder(
-      future: _future(),
-      //future: _gameController.index(), 
-      builder: (context, AsyncSnapshot<List<ReducedGameInfo>> snapshot) {
-        if (!snapshot.hasData) {
-          return const Text('Loading games...');
-        }
-
-        final List<ReducedGameInfo> games = snapshot.data!;
-
-        if (games.isEmpty){
-          return const Text('No games found.');
-        }
-
-        return GridView.builder(
-          itemCount: games.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: crossAxisCount,
-            childAspectRatio: 0.5,
-          ),
-          itemBuilder: (_, i) {
-            final current = games.elementAt(i);
-
-            return GameItemWidget(
-              reducedGameInfo: current,
+        future: _future(),
+        //future: _gameController.index(),
+        builder: (context, AsyncSnapshot<List<ReducedGameInfo>> snapshot) {
+          if (!snapshot.hasData) {
+            return Column(
+              children: [
+                Center(
+                  child: Text(
+                    'Loading games...',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                const LinearProgressIndicator(),
+              ],
             );
-          },
-        );
-      }
-    );
+          }
+
+          final List<ReducedGameInfo> games = snapshot.data!;
+
+          if (games.isEmpty) {
+            return const Text('No games found.');
+          }
+
+          return GridView.builder(
+            itemCount: games.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: crossAxisCount,
+              childAspectRatio: 0.5,
+            ),
+            itemBuilder: (_, i) {
+              final current = games.elementAt(i);
+
+              return GameItemWidget(
+                reducedGameInfo: current,
+              );
+            },
+          );
+        });
   }
 }
