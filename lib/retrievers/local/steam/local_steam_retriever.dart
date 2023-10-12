@@ -12,8 +12,8 @@ import 'package:sync_launcher/retrievers/metadata/steam/local_steam_metadata_ret
 class LocalSteamRetriever extends BaseLocalGameRetriever {
   late final LocalSteamMetadataRetriever metadataRetriever;
 
-  LocalSteamRetriever({required super.steamBasePath}) {
-    metadataRetriever = LocalSteamMetadataRetriever(steamBasePath: steamBasePath);
+  LocalSteamRetriever({required super.launcherBasePath}) {
+    metadataRetriever = LocalSteamMetadataRetriever(steamBasePath: launcherBasePath);
   }
 
   @override
@@ -53,7 +53,7 @@ class LocalSteamRetriever extends BaseLocalGameRetriever {
   /// 
   /// Retrieves the manifest files for the installed apps.
   Future<Iterable<File>> _getManifests() async {
-    final Directory manifestDirectory = Directory(p.join(super.steamBasePath, '/steamapps'));
+    final Directory manifestDirectory = Directory(p.join(super.launcherBasePath, '/steamapps'));
     final Iterable<File> manifests = (await manifestDirectory.list().toList())
       .whereType<File>().where((element) => element.path.contains('appmanifest_'));
 

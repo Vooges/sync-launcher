@@ -11,34 +11,69 @@ import 'package:sync_launcher/retrievers/local/steam/local_steam_retriever.dart'
 class GameBootstrapper {
   final GameRepository _gameRepository = GameRepository();
 
-  String getSteamBasePath() {
+  /// Retrieves all games for the connected launchers and adds the to the database.
+  Future<void> bootstrap() async {
+    final connectedLaunchers = ['Epic Games', 'Steam'];
+    final retrievers = _getGameRetrievers();
+
+    final List<GameInfo> foundGames = List.empty(growable: true);
+    for (String launcher in connectedLaunchers) {
+      GameRetriever? retriever = retrievers[launcher];
+      if(retriever == null) continue;
+
+      foundGames.addAll(await retriever.retrieveGames());
+    }
+
+    await _insertIntoDatabase(gameList: foundGames);
+  }
+
+  Map<String, GameRetriever> _getGameRetrievers() {
+    Map<String, GameRetriever> retrievers = {};
+
+    try {
+      retrievers['Epic Games'] = GameRetriever(
+        localRetriever: LocalEpicGamesRetriever(
+          launcherBasePath: _getEpicBasePath(),
+        ),
+      );
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+
+    try {
+      retrievers['Steam'] = GameRetriever(
+        apiRetriever: APISteamRetriever(userId: '76561198440106475'),
+        localRetriever: LocalSteamRetriever(
+          launcherBasePath: _getSteamBasePath(),
+        ),
+      );
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+
+    return retrievers;
+  }
+
+  String _getSteamBasePath() {
     if (defaultTargetPlatform == TargetPlatform.windows) {
       return "C:\\Program Files (x86)\\Steam";
     } else if (defaultTargetPlatform == TargetPlatform.linux) {
       return "~/.steam/steam/";
     }
 
-    throw Exception("platform not supported");
+    throw Exception('steam not supported on $defaultTargetPlatform');
   }
 
-  /// Retrieves all games for the connected launchers and adds the to the database.
-  Future<void> bootstrap() async {
-    List<String> connectedLaunchers = ['Epic Games', 'Steam'];
-    Map<String, GameRetriever> retrievers = {
-      'Epic Games': GameRetriever(localRetriever: LocalEpicGamesRetriever()),
-      'Steam': GameRetriever(
-        apiRetriever: APISteamRetriever(userId: '76561198440106475'),
-        localRetriever: LocalSteamRetriever(steamBasePath: getSteamBasePath()),
-      )
-    };
-
-    final List<GameInfo> foundGames = List.empty(growable: true);
-    for (String launcher in connectedLaunchers) {
-      GameRetriever retriever = retrievers[launcher]!;
-      foundGames.addAll(await retriever.retrieveGames());
+  String _getEpicBasePath() {
+    if (defaultTargetPlatform == TargetPlatform.windows) {
+      return "C:\\ProgramData\\Epic\\EpicGamesLauncher\\Data\\Manifests";
     }
 
-    await _insertIntoDatabase(gameList: foundGames);
+    throw Exception('epic not supported on $defaultTargetPlatform');
   }
 
   /// Inserts the provided list of games into the database.
