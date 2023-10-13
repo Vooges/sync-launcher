@@ -9,7 +9,7 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        Provider(create: (_) => SettingsState(darkTheme: false)),
+        Provider(create: (_) => SettingsState()),
       ],
       child: const MyApp(),
     ),
