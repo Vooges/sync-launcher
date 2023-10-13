@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:path/path.dart' as p;
-
 import 'package:sync_launcher/helpers/acf_converter.dart';
 import 'package:sync_launcher/models/dlc_info.dart';
 import 'package:sync_launcher/models/game_info.dart';
@@ -35,7 +33,9 @@ class LocalSteamRetriever extends BaseLocalGameRetriever {
           title: 'Steam', 
           imagePath: 'assets/images/launchers/steam/logo.svg'
         ),
-        imagePath: metadataRetriever.getImagePath(appId: jsonContents['appid'] as String),
+        iconImagePath: metadataRetriever.getIconImagePath(appId: jsonContents['appid'] as String),
+        gridImagePath: metadataRetriever.getGridImagePath(appId: jsonContents['appid'] as String),
+        heroImagePath: metadataRetriever.getHeroImagePath(appId: jsonContents['appid'] as String),
         description: await metadataRetriever.getDescription(appId: jsonContents['appid'] as String),
         installSize: int.parse(jsonContents['SizeOnDisk'] as String),
         version: jsonContents['buildid'] as String,
@@ -53,7 +53,7 @@ class LocalSteamRetriever extends BaseLocalGameRetriever {
   /// 
   /// Retrieves the manifest files for the installed apps.
   Future<Iterable<File>> _getManifests() async {
-    final Directory manifestDirectory = Directory(p.join(super.launcherBasePath, '/steamapps'));
+    final Directory manifestDirectory = Directory('${super.launcherBasePath}/steamapps');
     final Iterable<File> manifests = (await manifestDirectory.list().toList())
       .whereType<File>().where((element) => element.path.contains('appmanifest_'));
 
@@ -69,7 +69,8 @@ class LocalSteamRetriever extends BaseLocalGameRetriever {
         foundDLC.add(DLCInfo(
           title: 'Unknown', // TODO: find this out via the Steam API, or find a way to get this locally (preferred).
           appId: installedDepot['dlcappid'] as String, 
-          parentAppId: parentAppId
+          parentAppId: parentAppId,
+          imagePath: metadataRetriever.getHeaderImagePath(appId: installedDepot['dlcappid'] as String)
         ));
       }
     }

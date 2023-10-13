@@ -6,7 +6,9 @@ class GameInfo {
   String title;
   String? description;
   String launchURL;
-  String? imagePath;
+  String? iconImagePath;
+  String? gridImagePath;
+  String? heroImagePath;
   String appId;
   String version;
   int installSize; // Size is in bytes
@@ -18,7 +20,9 @@ class GameInfo {
     required this.appId,
     required this.launchURL,
     required this.launcherInfo,
-    this.imagePath,
+    this.iconImagePath,
+    this.gridImagePath,
+    this.heroImagePath,
     int? id,
     String? description,
     int? installSize,
@@ -33,9 +37,16 @@ class GameInfo {
       id = game['id'] as int,
       title = game['title'] as String,
       appId = game['app_id'] as String,
-      imagePath = game['image_path'] as String?,
+      iconImagePath = game['icon_image_path'] as String?,
+      gridImagePath = game['grid_image_path'] as String?,
+      heroImagePath = game['hero_image_path'] as String?,
       launchURL = game['launch_url'] as String,
-      launcherInfo = LauncherInfo(id: game['launcher_id'] as int, title: game['launcher_title'] as String, imagePath: game['launcher_image_path'] as String),
+      launcherInfo = LauncherInfo(
+        id: game['launcher_id'] as int, 
+        title: game['launcher_title'] as String, 
+        imagePath: game['launcher_image_path'] as String,
+        installPath: game['launcher_install_path'] as String?
+      ),
       description = game['description'] as String?,
       dlc = dlc ?? List.empty(growable: true),
       installSize = game['install_size'] as int,
@@ -47,7 +58,9 @@ class GameInfo {
         'title': title,
         'description': description,
         'launch_url': launchURL,
-        'image_path': imagePath,
+        'icon_image_path': iconImagePath,
+        'grid_image_path': gridImagePath,
+        'hero_image_path': heroImagePath,
         'app_id': appId,
         'version': version,
         'install_size': installSize,
