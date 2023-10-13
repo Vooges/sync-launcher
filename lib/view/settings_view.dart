@@ -40,24 +40,6 @@ class _SettingsViewState extends State<SettingsView> {
           },
         ),
         const SizedBox(height: 25),
-        SwitchListTile(
-          contentPadding: const EdgeInsets.only(left: 5.0, right: 5.0),
-          title: const Row(
-            children: [
-              Icon(Icons.dark_mode),
-              SizedBox(width: 12.5),
-              Expanded(child: Text('Dark Theme')),
-            ],
-          ),
-          value: settingsState.darkTheme,
-          onChanged: (bool value) {
-            setState(() {
-              settingsState.darkTheme = !settingsState.darkTheme;
-              settingsState.save();
-            });
-          },
-        ),
-        const SizedBox(height: 25),
         Text(
           'Connected controllers (0/0)',
           style: Theme.of(context).textTheme.titleMedium,
