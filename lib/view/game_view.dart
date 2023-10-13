@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:sync_launcher/controllers/game_controller.dart';
 import 'package:sync_launcher/models/game_info.dart';
@@ -38,8 +40,11 @@ class GameView extends StatelessWidget {
               // Background Image
               backgroundContainer,
               // Blurred Background Filter
-              Container(
-                color: Colors.black.withOpacity(0.7),
+              BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 15.0, sigmaY: 15.0),
+                child: Container(
+                  decoration: BoxDecoration(color: Colors.black.withOpacity(0.7)),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(48.0),
