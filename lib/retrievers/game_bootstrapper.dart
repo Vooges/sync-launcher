@@ -21,7 +21,7 @@ class GameBootstrapper {
     // Skip bootstrapping if the database is not empty. The bootstrapper is eventually going 
     // to be removed entirely and game retrieval is done on a per-launcher basis from the settings.
     if (results.isNotEmpty){
-      //return;
+      return;
     }
 
     final connectedLaunchers = ['Epic Games', 'Steam'];
