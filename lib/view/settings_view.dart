@@ -18,16 +18,24 @@ class _SettingsViewState extends State<SettingsView> {
     return ListView(
       children: [
         TextFormField(
+          initialValue: settingsState.steamBasePath ?? '',
           decoration: const InputDecoration(
             border: UnderlineInputBorder(),
             labelText: 'Path to Steam installation',
           ),
+          onChanged: (text) {
+            settingsState.steamBasePath = text;
+          },
         ),
         TextFormField(
+          initialValue: settingsState.epicBasePath ?? '',
           decoration: const InputDecoration(
             border: UnderlineInputBorder(),
             labelText: 'Path to Epic installation',
           ),
+          onChanged: (text) {
+            settingsState.epicBasePath = text;
+          },
         ),
         const SizedBox(height: 25),
         SwitchListTile(
