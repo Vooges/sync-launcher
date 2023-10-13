@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sync_launcher/state/settings_state.dart';
 import 'package:sync_launcher/view/home_view.dart';
 import 'package:sync_launcher/view/settings_view.dart';
 import 'package:sync_launcher/view/widgets/status_bar.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        Provider(create: (_) => SettingsState(darkTheme: false)),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -40,9 +49,7 @@ class _SyncScaffoldState extends State<SyncScaffold> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(70),
-        child: StatusBarWidget()
-      ),
+          preferredSize: Size.fromHeight(70), child: StatusBarWidget()),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(12.0),
