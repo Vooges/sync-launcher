@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:hive/hive.dart';
 
 class SettingsState {
   late bool darkTheme;
@@ -9,6 +10,25 @@ class SettingsState {
     darkTheme = true;
     steamBasePath = _getSteamBasePath();
     epicBasePath = _getEpicBasePath();
+
+    _init();
+  }
+
+  save() async {
+    final box = Hive.box('settings_state');
+
+    await box.put('darkTheme', darkTheme);
+    await box.put('steamBasePath', steamBasePath);
+    await box.put('epicBasePath', epicBasePath);
+  }
+
+  _init() async {
+    await Hive.openBox('settings_state', path: './');
+    final box = Hive.box('settings_state');
+
+    darkTheme = await box.get('darkTheme') ?? darkTheme;
+    steamBasePath = await box.get('steamBasePath') ?? steamBasePath;
+    epicBasePath = await box.get('epicBasePath') ?? epicBasePath;
   }
 
   String? _getSteamBasePath() {

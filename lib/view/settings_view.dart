@@ -25,6 +25,7 @@ class _SettingsViewState extends State<SettingsView> {
           ),
           onChanged: (text) {
             settingsState.steamBasePath = text;
+            settingsState.save();
           },
         ),
         TextFormField(
@@ -35,6 +36,7 @@ class _SettingsViewState extends State<SettingsView> {
           ),
           onChanged: (text) {
             settingsState.epicBasePath = text;
+            settingsState.save();
           },
         ),
         const SizedBox(height: 25),
@@ -51,6 +53,7 @@ class _SettingsViewState extends State<SettingsView> {
           onChanged: (bool value) {
             setState(() {
               settingsState.darkTheme = !settingsState.darkTheme;
+              settingsState.save();
             });
           },
         ),
