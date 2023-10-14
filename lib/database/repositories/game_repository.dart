@@ -16,7 +16,7 @@ class GameRepository extends BaseRepository{
       SELECT 
         g.id, 
         g.title, 
-        g.image_path, 
+        g.grid_image_path, 
         g.install_size > 0 as installed,
         l.id as launcher_id, 
         l.title as launcher_title, 
@@ -39,10 +39,13 @@ class GameRepository extends BaseRepository{
         g.title, 
         g.app_id, 
         g.launch_url, 
-        g.image_path,
+        g.grid_image_path,
+        g.icon_image_path,
+        g.hero_image_path,
         l.id as launcher_id, 
         l.title as launcher_title, 
         l.image_path as launcher_image_path, 
+        l.install_path as launcher_install_path,
         g.description, 
         g.install_size, 
         g.version 
@@ -74,9 +77,12 @@ class GameRepository extends BaseRepository{
 
     // Prevents primary key constraint failure.
     gameMap['id'] = null;
+
     int gameId = await super.sqliteHandler.insert(table: 'games', values: gameMap);
 
-    await _dlcRepository.insertMultiple(dlcList: dlc);
+    if (dlc.isNotEmpty){
+      await _dlcRepository.insertMultiple(dlcList: dlc);
+    }
 
     return gameId;
   }

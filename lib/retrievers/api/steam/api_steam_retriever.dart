@@ -43,11 +43,11 @@ class APISteamRetriever extends BaseAPIGameRetriever {
             title:  'Steam',
             imagePath: 'assets/launchers/steam/logo.svg',
           ),
-          imagePath: logo, // TODO: download the image, save it to assets, and set the path to the downloaded image.
-          version: 'Unknown',
-          // TODO: Add version if available.
-          installSize: 0,
-          // TODO: Add install size if available.
+          iconImagePath: logo, // TODO: find the actual logo.
+          gridImagePath: logo, // TODO: find the actual grid image.
+          heroImagePath: logo, // TODO: find the actual hero image.
+          version: 'Unknown', // TODO: Add version if available.
+          installSize: 0, // TODO: Add install size if available.
           dlc: [], // TODO: Add DLC info if available.
         );
 

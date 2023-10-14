@@ -13,13 +13,13 @@ class GameRetriever {
   Future<List<GameInfo>> retrieveGames() async {
     List<GameInfo> foundGames = List.empty(growable: true);
 
-    if (apiRetriever != null){
-      try {
-        foundGames.addAll(await apiRetriever!.retrieve());
-      } catch (exception){
-        log(exception.toString());
-      }
-    }
+    // if (apiRetriever != null){
+    //   try {
+    //     foundGames.addAll(await apiRetriever!.retrieve());
+    //   } catch (exception){
+    //     log(exception.toString());
+    //   }
+    // }
 
     if (foundGames.isEmpty){
       try {

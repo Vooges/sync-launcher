@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sync_launcher/models/game_info.dart';
-import 'package:sync_launcher/models/launcher_info.dart';
+import 'package:sync_launcher/helpers/image_resolver.dart';
 import 'package:sync_launcher/models/reduced_game_info.dart';
 import 'package:sync_launcher/view/game_view.dart';
 
@@ -27,24 +26,7 @@ class GameItemWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // FadeInImage.assetNetwork(
-            //   placeholder: 'assets/images/games/default_cover.png', 
-            //   image: reducedGameInfo.imagePath ?? 'assets/images/games/default_cover.png',
-            //   height: 300,
-            //   fit: BoxFit.fitWidth,
-            // ),
-            Image.network(
-              reducedGameInfo.imagePath ?? '',
-              height: 300,
-              fit: BoxFit.fitWidth,
-              errorBuilder: ((context, error, stackTrace) {
-                return Image.asset(
-                  'assets/images/games/default_cover.png',
-                  height: 300,
-                  fit: BoxFit.fitWidth,
-                );
-              }),
-            ),
+            ImageResolver.createImage(imageType: ImageType.grid, path: reducedGameInfo.gridImagePath, height: 300, fit: BoxFit.fitWidth),
             Padding(
               padding: const EdgeInsets.all(15),
               child: Text(

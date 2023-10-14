@@ -39,7 +39,9 @@ class LocalEpicGamesRetriever extends BaseLocalGameRetriever {
             imagePath: 'assets/images/launchers/epic_games/logo.svg'
           ),
           description: null, // Get this later as a background process.
-          imagePath: null, // Get this later as a background process.
+          iconImagePath: null, // Get this later as a background process.
+          gridImagePath: null, // Get this later as a background process.
+          heroImagePath: null, // Get this later as a background process.
           installSize: jsonContents['InstallSize'] as int, 
           version: jsonContents['AppVersionString'] as String
           ));

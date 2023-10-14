@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:sync_launcher/controllers/game_controller.dart';
+import 'package:sync_launcher/helpers/image_resolver.dart';
 import 'package:sync_launcher/models/game_info.dart';
 import 'package:sync_launcher/view/widgets/friends_playing.dart';
 import 'package:sync_launcher/view/widgets/game_info.dart';
@@ -23,17 +24,13 @@ class GameView extends StatelessWidget {
           if (snapshot.hasData) {
             final GameInfo gameInfo = snapshot.data!;
 
-            final backgroundContainer = gameInfo.imagePath != null
-                ? Container(
+            final backgroundContainer = Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: NetworkImage(gameInfo.imagePath ?? ''),
+                        image: ImageResolver.createImage(imageType: ImageType.hero, path: gameInfo.heroImagePath).image,
                         fit: BoxFit.cover,
                       ),
                     ),
-                  )
-                : Container(
-                    color: Theme.of(context).colorScheme.background,
                   );
 
             children = [

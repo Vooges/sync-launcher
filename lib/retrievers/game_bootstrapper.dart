@@ -1,10 +1,10 @@
 import 'dart:developer';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:sync_launcher/database/repositories/game_repository.dart';
 import 'package:sync_launcher/models/game_info.dart';
+import 'package:sync_launcher/models/reduced_game_info.dart';
 import 'package:sync_launcher/retrievers/api/steam/api_steam_retriever.dart';
 import 'package:sync_launcher/retrievers/game_retriever.dart';
 import 'package:sync_launcher/retrievers/local/epic_games/local_epic_games_retriever.dart';
@@ -16,6 +16,14 @@ class GameBootstrapper {
 
   /// Retrieves all games for the connected launchers and adds the to the database.
   Future<void> bootstrap(BuildContext context) async {
+    final List<ReducedGameInfo> results = await _gameRepository.getReducedGames();
+
+    // Skip bootstrapping if the database is not empty. The bootstrapper is eventually going 
+    // to be removed entirely and game retrieval is done on a per-launcher basis from the settings.
+    if (results.isNotEmpty){
+      return;
+    }
+
     final connectedLaunchers = ['Epic Games', 'Steam'];
     final retrievers = _getGameRetrievers(context);
 
@@ -31,7 +39,7 @@ class GameBootstrapper {
   }
 
   Map<String, GameRetriever> _getGameRetrievers(BuildContext context) {
-    final settingsState = context.watch<SettingsState>();
+    final settingsState = context.read<SettingsState>();
     Map<String, GameRetriever> retrievers = {};
 
     final epicBasePath = settingsState.epicBasePath;
@@ -43,10 +51,10 @@ class GameBootstrapper {
       );
     }
 
-    final steamBasePath = settingsState.epicBasePath;
+    final steamBasePath = settingsState.steamBasePath;
     if(steamBasePath != null) {
       retrievers['Steam'] = GameRetriever(
-        apiRetriever: APISteamRetriever(userId: '76561198440106475'),
+        apiRetriever: APISteamRetriever(userId: '76561198440106475'), // TODO: remove this hardcoded userId and use the actual user's userId.
         localRetriever: LocalSteamRetriever(
           launcherBasePath: steamBasePath,
         ),

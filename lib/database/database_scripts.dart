@@ -3,7 +3,8 @@ class DatabaseScripts {
     CREATE TABLE launchers (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       title TEXT NOT NULL,
-      image_path TEXT NOT NULL
+      image_path TEXT NOT NULL,
+      install_path TEXT
     );
 
     CREATE TABLE games (
@@ -12,10 +13,12 @@ class DatabaseScripts {
       title TEXT NOT NULL,
       launch_url TEXT NOT NULL,
       launcher_id INTEGER NOT NULL,
-      image_path TEXT,
-      description TEXT DEFAULT 'Unknown',
+      icon_image_path TEXT,
+      grid_image_path TEXT,
+      hero_image_path TEXT,
+      description TEXT,
       install_size INTEGER DEFAULT 0,
-      version TEXT DEFAULT 'Unknown',
+      version TEXT,
 
       FOREIGN KEY (launcher_id) REFERENCES launchers(id)
     );
@@ -52,7 +55,7 @@ class DatabaseScripts {
 
   static const String insertLaunchers = '''
     INSERT INTO launchers VALUES
-      (NULL, 'Steam', 'lib/assets/images/launchers/steam/logo.svg'),
-      (NULL, 'Epic Games', 'lib/assets/images/launchers/epic_games/logo.svg');
+      (NULL, 'Steam', 'lib/assets/images/launchers/steam/logo.svg', NULL),
+      (NULL, 'Epic Games', 'lib/assets/images/launchers/epic_games/logo.svg', NULL);
   ''';
 }
