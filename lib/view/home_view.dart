@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:sync_launcher/controllers/game_controller.dart';
 import 'package:sync_launcher/models/reduced_game_info.dart';
-import 'package:sync_launcher/retrievers/game_bootstrapper.dart';
 import 'package:sync_launcher/view/widgets/game_item.dart';
 
 class HomeView extends StatelessWidget {
   final GameController _gameController = GameController();
-  final GameBootstrapper _gameBootstrapper = GameBootstrapper();
 
   HomeView({super.key});
 
   Future<List<ReducedGameInfo>> _bootstrapAndGetGames(BuildContext context) async {
-    await _gameBootstrapper.bootstrap(context);
-    return _gameController.index();
+    return await _gameController.index();
   }
 
   @override

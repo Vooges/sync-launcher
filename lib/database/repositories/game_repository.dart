@@ -1,5 +1,6 @@
 import 'package:sync_launcher/database/repositories/base_repository.dart';
 import 'package:sync_launcher/database/repositories/dlc_repository.dart';
+import 'package:sync_launcher/database/repositories/launcher_repository.dart';
 import 'package:sync_launcher/models/dlc_info.dart';
 import 'package:sync_launcher/models/game_info.dart';
 import 'package:sync_launcher/models/launcher_info.dart';
@@ -7,6 +8,7 @@ import 'package:sync_launcher/models/reduced_game_info.dart';
 
 class GameRepository extends BaseRepository{
   final DLCRepository _dlcRepository = DLCRepository();
+  final LauncherRepository _launcherRepository = LauncherRepository();
   final int _limit = 100;
 
   Future<List<ReducedGameInfo>> getReducedGames({int? offset}) async {
@@ -71,8 +73,7 @@ class GameRepository extends BaseRepository{
     gameMap.remove('dlc');
     gameMap.remove('launcher');
 
-    // TODO: Get this from the launcher repository for clean code's sake.
-    int launcherId = (await super.sqliteHandler.selectRaw(query: 'SELECT id FROM launchers WHERE title LIKE ?', parameters: List.from([launcher.title])))[0]['id'] as int;
+    int launcherId = (await _launcherRepository.getLauncherByName(name: launcher.title))!.id;
     gameMap['launcher_id'] = launcherId;
 
     // Prevents primary key constraint failure.
@@ -98,13 +99,12 @@ class GameRepository extends BaseRepository{
     return ids;
   }
 
-  Future<int> deleteAll() async{
-    await _dlcRepository.deleteAll();
-
+  Future<int> deleteAllForLauncher({required int id}) async{
     String query = '''
-      DELETE FROM games;
+      DELETE FROM games 
+      WHERE launcher_id = ?;
     ''';
 
-    return await super.sqliteHandler.deleteRaw(query: query);
+    return await super.sqliteHandler.deleteRaw(query: query, parameters: [id]);
   }
 }

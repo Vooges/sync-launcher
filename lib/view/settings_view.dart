@@ -1,50 +1,55 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
-import 'package:sync_launcher/state/settings_state.dart';
+import 'package:sync_launcher/controllers/settings_controller.dart';
+import 'package:sync_launcher/models/launcher_info.dart';
 
-class SettingsView extends StatefulWidget {
-  const SettingsView({super.key});
+class SettingsView extends StatelessWidget {
+  SettingsView({super.key});
 
-  @override
-  State<SettingsView> createState() => _SettingsViewState();
-}
+  final SettingsController _settingsController = SettingsController();
 
-class _SettingsViewState extends State<SettingsView> {
   @override
   Widget build(BuildContext context) {
-    final settingsState = context.watch<SettingsState>();
+    return FutureBuilder<ListView>(
+      future: _createLauncherInstallPathWidgets(), 
+      builder: (BuildContext context, AsyncSnapshot<ListView> snapshot){
+        if (snapshot.hasData){
+          return snapshot.data!;
+        } else {
+          return ListView();
+        }
+      }
+    );
+  }
+
+  Future<ListView> _createLauncherInstallPathWidgets() async{
+    List<Widget> widgets = List.empty(growable: true);
+
+    List<LauncherInfo> launchers = await _settingsController.getLaunchers();
+
+    for (LauncherInfo launcher in launchers) {
+      widgets.add(TextFormField(
+        initialValue: launcher.installPath,
+        decoration: InputDecoration(
+          border: const UnderlineInputBorder(),
+          labelText: 'Path to ${launcher.title} installation',
+        ),
+        onChanged: (text) async {
+          await _settingsController.setLauncherInstallPath(launcherId: launcher.id, installPath: text);
+        }));
+      widgets.add(TextButton(
+        onPressed: () async {
+          try {
+            await _settingsController.runGameRetriever(launcherId: launcher.id);
+          } catch (exception){
+            //
+          }
+        }, 
+        child: const Text('Retrieve games')
+      ));
+    }
 
     return ListView(
-      children: [
-        TextFormField(
-          initialValue: settingsState.steamBasePath ?? '',
-          decoration: const InputDecoration(
-            border: UnderlineInputBorder(),
-            labelText: 'Path to Steam installation',
-          ),
-          onChanged: (text) {
-            settingsState.steamBasePath = text;
-            settingsState.save();
-          },
-        ),
-        TextFormField(
-          initialValue: settingsState.epicBasePath ?? '',
-          decoration: const InputDecoration(
-            border: UnderlineInputBorder(),
-            labelText: 'Path to Epic installation',
-          ),
-          onChanged: (text) {
-            settingsState.epicBasePath = text;
-            settingsState.save();
-          },
-        ),
-        const SizedBox(height: 25),
-        Text(
-          'Connected controllers (0/0)',
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-      ],
+      children: widgets,
     );
   }
 }

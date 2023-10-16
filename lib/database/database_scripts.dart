@@ -20,7 +20,7 @@ class DatabaseScripts {
       install_size INTEGER DEFAULT 0,
       version TEXT,
 
-      FOREIGN KEY (launcher_id) REFERENCES launchers(id)
+      FOREIGN KEY (launcher_id) REFERENCES launchers(id) ON DELETE CASCADE
     );
 
     CREATE TABLE dlc (
@@ -32,7 +32,7 @@ class DatabaseScripts {
       image_path TEXT,
       install_size INTEGER DEFAULT 0,
 
-      FOREIGN KEY (parent_id) REFERENCES games(id)
+      FOREIGN KEY (parent_id) REFERENCES games(id) ON DELETE CASCADE
     );
 
     CREATE TABLE users (
@@ -40,7 +40,7 @@ class DatabaseScripts {
       unique_launcher_identifier STRING NOT NULL,
       launcher_id INTEGER NOT NULL,
 
-      FOREIGN KEY (launcher_id) REFERENCES launchers(id)
+      FOREIGN KEY (launcher_id) REFERENCES launchers(id) ON DELETE CASCADE
     );
 
     CREATE TABLE sessions (
@@ -49,7 +49,7 @@ class DatabaseScripts {
       start_time INTEGER NOT NULL,
       end_time INTEGER NOT NULL,
 
-      FOREIGN KEY (game_id) REFERENCES games(id)
+      FOREIGN KEY (game_id) REFERENCES games(id) ON DELETE CASCADE
     );
   ''';
 
