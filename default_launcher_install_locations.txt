@@ -1,17 +1,17 @@
-Epic Games => C:\Program Files(x86)\Epic Games\
+Epic Games => C:\Program Files (x86)\Epic Games\
     Manifest location = C:\ProgramData\Epic\EpicGamesLauncher\Data\Manifests (All files have the .ITEM extension, but contain valid JSON. These files can be for a game or DLC (called add-on).)
     Item type is defined in both AppCategories and TechnicalType: games means the item is a game, addons means the item is DLC.
     It appears that DLC can be matched with the game itself by checking the CatalogNamespace/MainGameCatalogNamespace
     
     Sid Meier's Civilization VI launch url = com.epicgames.launcher://apps/cd14dcaa4f3443f19f7169a980559c62%3A42ac1ee840304cb1807172a9b47dc8e3%3AKinglet?action=launch&silent=true -> 
     - cd14dcaa4f3443f19f7169a980559c62 looks to be the MainGameCatalogNamespace
-    - 3A42ac1ee840304cb1807172a9b47dc8e3 -> 42ac1ee840304cb1807172a9b47dc8e3 is the CatalogItemId
-    - 3AKinglet -> Kinglet is the MainGameAppName
+    - 42ac1ee840304cb1807172a9b47dc8e3 is the CatalogItemId
+    - Kinglet is the MainGameAppName
     - %3A looks to be the separator
 
     Overcooked launch url = com.epicgames.launcher://apps/4561b40e52584ac2bcf34bbd5c401480%3A7e97838fff4e48e79f892f1e64d42cb0%3ASage?action=launch&silent=true
 
-Steam => C:\Program Files(x86)\Steam\
+Steam => C:\Program Files (x86)\Steam\
     Manifest location = C:\\Program Files (x86)\\Steam\\steamapps (.acf extension)
     ACF is similar to JSON, but it takes some work to convert it from one to the other.
 
@@ -20,5 +20,5 @@ Steam => C:\Program Files(x86)\Steam\
     Crusader Kings II launch url = steam://rungameid/203770
     - 203770 is the appId
 
-    C:\Program Files (x86)\Steam\appcache\librarycache contains header, icon and banner images for the library.
-    C:\Program Files (x86)\Steam\userdata\$userId\config\librarycache contains metadata and more for all games in the the user's library.
+    C:\Program Files (x86)\Steam\appcache\librarycache contains header, icon, grid and banner images for the library.
+    C:\Program Files (x86)\Steam\userdata\$userId\config\librarycache contains metadata and more for all(?) games in the the user's library.
