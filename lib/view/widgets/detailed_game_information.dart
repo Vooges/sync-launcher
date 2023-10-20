@@ -82,7 +82,8 @@ class DetailedGameInformationWidget extends StatelessWidget {
                           children: <Widget>[
                             LaunchGameButtonWidget(
                               gameLaunchURL: gameInfo.launchURL, 
-                              launcherImagePath: gameInfo.launcherInfo.imagePath
+                              launcherImagePath: gameInfo.launcherInfo.imagePath,
+                              installed: gameInfo.installSize > 0,
                             )
                           ]
                         )

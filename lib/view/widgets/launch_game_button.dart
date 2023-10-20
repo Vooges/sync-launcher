@@ -5,19 +5,40 @@ import 'package:url_launcher/url_launcher.dart';
 class LaunchGameButtonWidget extends StatelessWidget {
   final String launcherImagePath;
   final String gameLaunchURL;
+  final bool installed;
 
-  const LaunchGameButtonWidget({super.key, required this.gameLaunchURL, required this.launcherImagePath});
+  const LaunchGameButtonWidget({super.key, required this.gameLaunchURL, required this.launcherImagePath, required this.installed});
 
   Future<void> _launchGame() async {
     if (!await launchUrl(Uri.parse(gameLaunchURL))) {
-      throw Exception('could not launch game');
+      throw Exception('Could not launch game');
     }
+  }
+
+  Future<void> _installGame() async {
+    // TODO
   }
 
   @override
   Widget build(BuildContext context) {
+    String buttonText = (installed) ? 'Launch' : 'Install';
+    Function() onPressed = (installed) ? _launchGame : _installGame;
+    final List<Color> buttonColors = (installed) 
+    ? <Color>[
+      const Color(0xffD702FF), 
+      const Color(0xff553DFE)
+    ]
+    : <Color>[
+      const Color.fromARGB(255, 43, 184, 62),
+      const Color.fromARGB(255, 0, 153, 33)
+    ];
+
     return DecoratedBox(
-      decoration: const BoxDecoration(gradient: LinearGradient(colors: [Color(0xffD702FF), Color(0xff553DFE)])),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: buttonColors
+        )
+      ),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           shape: const RoundedRectangleBorder(
@@ -26,14 +47,14 @@ class LaunchGameButtonWidget extends StatelessWidget {
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent
         ),
-        onPressed: _launchGame, 
+        onPressed: onPressed, 
         child: Padding(
           padding: const EdgeInsets.all(5),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Launch',
+                buttonText,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: (Theme.of(context).textTheme.titleMedium?.fontSize ?? 15) * 2,
