@@ -65,10 +65,11 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   assets:
-  - 'assets/images/launchers/'
-  - 'assets/images/logo/'
-  - 'assets/images/profile/'
-  - 'assets/images/default/'
+    - 'assets/images/launchers/steam/'
+    - 'assets/images/launchers/epic_games/'
+    - 'assets/images/logo/'
+    - 'assets/images/profile/'
+    - 'assets/images/default/'
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

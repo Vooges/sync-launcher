@@ -26,7 +26,7 @@ class DLCInfo {
   parentId = dlc['parent_id'] as int,
   parentAppId = dlc['parent_app_id'] as String,
   imagePath = dlc['image_path'] as String?,
-  installSize = dlc['installSize'] as int;
+  installSize = dlc['install_size'] as int;
 
   Map<String, Object?> toMap(){
     return {
