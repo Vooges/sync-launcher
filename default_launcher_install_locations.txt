@@ -11,7 +11,7 @@ Epic Games => C:\Program Files (x86)\Epic Games\
 
     Overcooked launch url = com.epicgames.launcher://apps/4561b40e52584ac2bcf34bbd5c401480%3A7e97838fff4e48e79f892f1e64d42cb0%3ASage?action=launch&silent=true
 
-Steam => C:\Program Files (x86)\Steam\
+Steam => C:\Program Files (x86)\Steam
     Manifest location = C:\\Program Files (x86)\\Steam\\steamapps (.acf extension)
     ACF is similar to JSON, but it takes some work to convert it from one to the other.
 

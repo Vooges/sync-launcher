@@ -55,7 +55,7 @@ class DatabaseScripts {
 
   static const String insertLaunchers = '''
     INSERT INTO launchers VALUES
-      (NULL, 'Steam', 'lib/assets/images/launchers/steam/logo.svg', NULL),
-      (NULL, 'Epic Games', 'lib/assets/images/launchers/epic_games/logo.svg', NULL);
+      (NULL, 'Steam', 'assets/images/launchers/steam/logo.png', NULL),
+      (NULL, 'Epic Games', 'assets/images/launchers/epic_games/logo.png', NULL);
   ''';
 }

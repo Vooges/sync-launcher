@@ -8,7 +8,7 @@ class HomeView extends StatelessWidget {
 
   HomeView({super.key});
 
-  Future<List<ReducedGameInfo>> _bootstrapAndGetGames(BuildContext context) async {
+  Future<List<ReducedGameInfo>> _getGames(BuildContext context) async {
     return await _gameController.index();
   }
 
@@ -19,7 +19,7 @@ class HomeView extends StatelessWidget {
         .floor(); // Assuming each game item has a width of 200, adjust this value according to your item width
 
     return FutureBuilder(
-        future: _bootstrapAndGetGames(context),
+        future: _getGames(context),
         //future: _gameController.index(),
         builder: (context, AsyncSnapshot<List<ReducedGameInfo>> snapshot) {
           if (!snapshot.hasData) {

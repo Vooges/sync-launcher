@@ -82,6 +82,10 @@ class GameRepository extends BaseRepository{
     int gameId = await super.sqliteHandler.insert(table: 'games', values: gameMap);
 
     if (dlc.isNotEmpty){
+      for (DLCInfo dlcInfo in dlc) {
+        dlcInfo.parentId = gameId;
+      }
+
       await _dlcRepository.insertMultiple(dlcList: dlc);
     }
 

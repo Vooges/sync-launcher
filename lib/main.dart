@@ -1,19 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:sync_launcher/state/settings_state.dart';
 import 'package:sync_launcher/view/home_view.dart';
 import 'package:sync_launcher/view/settings_view.dart';
 import 'package:sync_launcher/view/widgets/status_bar.dart';
 
 void main() {
-  runApp(
-    MultiProvider(
-      providers: [
-        Provider(create: (_) => SettingsState()),
-      ],
-      child: const MyApp(),
-    ),
-  );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -21,13 +12,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData colorTheme = ThemeData(
+      colorSchemeSeed: const Color.fromRGBO(116, 17, 178, 100),
+      brightness: Brightness.dark,
+      useMaterial3: true,
+      scaffoldBackgroundColor: const Color(0xff222020)
+    );
+
     return MaterialApp(
       title: 'Sync',
-      theme: ThemeData(
-        colorSchemeSeed: const Color.fromRGBO(116, 17, 178, 100),
-        brightness: Brightness.dark,
-        useMaterial3: true,
-      ),
+      theme: colorTheme,
       home: const SyncScaffold(),
     );
   }
@@ -40,6 +34,7 @@ class SyncScaffold extends StatefulWidget {
   State<SyncScaffold> createState() => _SyncScaffoldState();
 }
 
+// TODO: remove bottomnavigationbar
 class _SyncScaffoldState extends State<SyncScaffold> {
   int _selectedIndex = 0;
 
@@ -49,7 +44,8 @@ class _SyncScaffoldState extends State<SyncScaffold> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(70), child: StatusBarWidget()),
+        preferredSize: Size.fromHeight(70), child: StatusBarWidget()
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(12.0),
