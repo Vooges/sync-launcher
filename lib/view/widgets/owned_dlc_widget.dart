@@ -9,6 +9,9 @@ class OwnedDLCWidget extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+    const  double width = 230;
+    const double height = width / 2;
+
     if (ownedDLC.isEmpty){
       return const Expanded(child: Column());
     }
@@ -25,14 +28,23 @@ class OwnedDLCWidget extends StatelessWidget {
               fontSize: 36
             ),
           ),
+          const SizedBox(height: 20),
           Expanded(
             child: GridView.builder(
               itemCount: ownedDLC.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2), 
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, 
+                childAspectRatio: 1.8,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10
+              ), 
               itemBuilder: (context, i) {
                 DLCInfo dlcInfo = ownedDLC[i];
 
-                return ImageResolver.createImage(imageType: ImageType.header, height: 230, width: 125, path: dlcInfo.imagePath);
+                return ImageResolver.createImage(
+                  imageType: ImageType.header, 
+                  path: dlcInfo.imagePath,
+                );
               }
             )
           )

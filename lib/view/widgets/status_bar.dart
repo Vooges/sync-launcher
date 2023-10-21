@@ -20,11 +20,19 @@ class StatusBarWidget extends StatelessWidget {
               width: 60)
           ),
           const Spacer(),
+          IconButton( // Settings icon
+            onPressed: (){
+              // TODO: Change view to the settings view.
+            }, 
+            icon: const Icon(Icons.settings), 
+            color: Colors.white,
+            iconSize: 25,
+          ),
           IconButton( // Network icon
             onPressed: (){
               // TODO: Check if this actually needs to do anything, or if it is just an informative thing.
             }, 
-            icon: const Icon(Icons.network_wifi_3_bar), 
+            icon: const Icon(Icons.network_wifi), 
             color: Colors.white,
             iconSize: 25,
           ),

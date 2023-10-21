@@ -20,8 +20,8 @@ class AdditionalGameInformationWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            const AchievementsWidget(achievements: [Achievement(name: 'Name', description: 'Description')]),
             const FriendsPlayingWidget(),
+            const AchievementsWidget(achievements: [Achievement(name: 'Achievement name', description: 'Achievement description')]),
             OwnedDLCWidget(ownedDLC: gameInfo.dlc)
           ]
         )

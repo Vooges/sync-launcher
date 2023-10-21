@@ -70,6 +70,7 @@ class FriendsPlayingWidget extends StatelessWidget {
               fontSize: 36
             ),
           ),
+          const SizedBox(height: 20),
           Expanded(
             child: ListView.builder(
               shrinkWrap: true,
@@ -77,19 +78,30 @@ class FriendsPlayingWidget extends StatelessWidget {
               itemBuilder: (context, i) {
                 FriendsPlaying friend = friendsPlaying[i];
 
-                return Row(
-                  children: <Widget>[
-                    friend.user.image,
-                    const SizedBox(width: 10),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(friend.user.username),
-                        Text('is playing ${friend.gameInfo.title}')
-                      ],
-                    )
-                  ],
+                return Padding(
+                  padding: EdgeInsets.only(
+                    bottom: (i != friendsPlaying.length) ? 10 : 0
+                  ),
+                  child: Row(
+                    children: <Widget>[
+                      friend.user.image,
+                      const SizedBox(width: 10),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            friend.user.username,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold
+                            ),
+                          ),
+                          Text('is playing ${friend.gameInfo.title}')
+                        ],
+                      )
+                    ],
+                  )
                 );
+                
               }
             )
           )
