@@ -10,14 +10,17 @@ class LibraryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(0),
+      ),
       child: Padding(
-        padding: const EdgeInsets.all(12.5),
+        padding: const EdgeInsets.all(25),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'Library',
-              style: Theme.of(context).textTheme.headlineMedium,
+              style: Theme.of(context).textTheme.displaySmall,
             ),
             const SizedBox(height: 12.5),
             GridView.builder(

@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sync_launcher/state/selected_view_state.dart';
 import 'package:sync_launcher/view/home_view.dart';
 import 'package:sync_launcher/view/settings_view.dart';
 import 'package:sync_launcher/view/widgets/status_bar.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => SelectedViewState(),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -13,11 +24,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData colorTheme = ThemeData(
-      colorSchemeSeed: const Color.fromRGBO(116, 17, 178, 100),
-      brightness: Brightness.dark,
-      useMaterial3: true,
-      scaffoldBackgroundColor: const Color(0xff222020)
-    );
+        colorSchemeSeed: const Color.fromRGBO(116, 17, 178, 100),
+        brightness: Brightness.dark,
+        useMaterial3: true,
+        scaffoldBackgroundColor: const Color(0xff222020));
 
     return MaterialApp(
       title: 'Sync',
@@ -36,39 +46,25 @@ class SyncScaffold extends StatefulWidget {
 
 // TODO: remove bottomnavigationbar
 class _SyncScaffoldState extends State<SyncScaffold> {
-  int _selectedIndex = 0;
-
   final views = List.of([HomeView(), SettingsView()]);
 
   @override
   Widget build(BuildContext context) {
+    final selectedViewState = context.watch<SelectedViewState>();
+
     return Scaffold(
       appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(70), child: StatusBarWidget()
+        preferredSize: Size.fromHeight(70),
+        child: StatusBarWidget(),
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: views.elementAt(_selectedIndex),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 25,
+            vertical: 12.5,
+          ),
+          child: views.elementAt(selectedViewState.index),
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.library_books),
-            label: 'Library',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        onTap: (int index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
       ),
     );
   }
