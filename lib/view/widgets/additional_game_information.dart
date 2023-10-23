@@ -13,18 +13,15 @@ class AdditionalGameInformationWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 52, right: 52, top: 0, bottom: 41),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            const FriendsPlayingWidget(),
-            const AchievementsWidget(achievements: [Achievement(name: 'Achievement name', description: 'Achievement description')]),
-            OwnedDLCWidget(ownedDLC: gameInfo.dlc)
-          ]
-        )
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          const FriendsPlayingWidget(),
+          const AchievementsWidget(achievements: [Achievement(name: 'Achievement name', description: 'Achievement description')]),
+          OwnedDLCWidget(ownedDLC: gameInfo.dlc)
+        ]
       )
     );
   }

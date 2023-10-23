@@ -46,8 +46,6 @@ class SyncScaffold extends StatefulWidget {
 
 // TODO: remove bottomnavigationbar
 class _SyncScaffoldState extends State<SyncScaffold> {
-  final views = List.of([HomeView(), SettingsView()]);
-
   @override
   Widget build(BuildContext context) {
     final selectedViewState = context.watch<SelectedViewState>();
@@ -63,7 +61,7 @@ class _SyncScaffoldState extends State<SyncScaffold> {
             horizontal: 25,
             vertical: 12.5,
           ),
-          child: views.elementAt(selectedViewState.index),
+          child: selectedViewState.view,
         ),
       ),
     );

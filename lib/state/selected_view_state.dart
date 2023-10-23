@@ -1,10 +1,11 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+import 'package:sync_launcher/view/home_view.dart';
 
 class SelectedViewState with ChangeNotifier {
-  int index = 0;
+  Widget view = HomeView();
 
-  setIndex(int index) {
-    this.index = index;
+  setView(Widget view) {
+    this.view = view;
     notifyListeners();
   }
 }

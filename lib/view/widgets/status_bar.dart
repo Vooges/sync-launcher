@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sync_launcher/state/selected_view_state.dart';
+import 'package:sync_launcher/view/home_view.dart';
+import 'package:sync_launcher/view/settings_view.dart';
 
 class StatusBarWidget extends StatelessWidget {
   const StatusBarWidget({super.key});
@@ -15,7 +17,7 @@ class StatusBarWidget extends StatelessWidget {
             IconButton(
               // Logo
               onPressed: () {
-                context.read<SelectedViewState>().setIndex(0);
+                context.read<SelectedViewState>().setView(HomeView());
               },
               icon: Image.asset(
                 'assets/images/logo/small_rounded.png',
@@ -27,7 +29,7 @@ class StatusBarWidget extends StatelessWidget {
             IconButton(
               // Settings icon
               onPressed: () {
-                context.read<SelectedViewState>().setIndex(1);
+                context.read<SelectedViewState>().setView(SettingsView());
               },
               icon: const Icon(Icons.settings),
               color: Colors.white,
