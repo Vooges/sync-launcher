@@ -18,22 +18,7 @@ class GameView extends StatelessWidget {
           if (snapshot.hasData) {
             final GameInfo gameInfo = snapshot.data!;
 
-            return Scaffold(
-              appBar: const PreferredSize(
-                preferredSize: Size.fromHeight(70), 
-                child: StatusBarWidget()
-              ),
-              backgroundColor: const Color(0xff222020),
-              body: SafeArea(
-                child: DetailedGameInformationWidget(key: key, gameInfo: gameInfo)
-              ),
-              floatingActionButton: FloatingActionButton(
-                child: const Icon(Icons.arrow_back),
-                onPressed: () {
-                  Navigator.pop(context);
-                }
-              ),
-            );
+            return DetailedGameInformationWidget(key: key, gameInfo: gameInfo);
           }
 
           return const Text('Could not load data.');
