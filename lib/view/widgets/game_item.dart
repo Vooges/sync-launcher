@@ -10,23 +10,21 @@ class GameItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      child: InkWell(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => GameView(gameId: reducedGameInfo.id),
-            ),
-          );
-        },
-        child: ImageResolver.createImage(
-          imageType: ImageType.grid,
-          path: reducedGameInfo.gridImagePath,
-          height: 300,
-          fit: BoxFit.fitHeight,
-        ),
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => GameView(gameId: reducedGameInfo.id),
+          ),
+        );
+      },
+      child: ImageResolver.createImage(
+        imageType: ImageType.grid,
+        path: reducedGameInfo.gridImagePath,
+        width: 250,
+        height: 350,
+        fit: BoxFit.fitHeight,
       ),
     );
   }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sync_launcher/controllers/game_controller.dart';
 import 'package:sync_launcher/models/reduced_game_info.dart';
 import 'package:sync_launcher/view/widgets/game_item.dart';
+import 'package:sync_launcher/view/widgets/library.dart';
+import 'package:sync_launcher/view/widgets/recently_played.dart';
 
 class HomeView extends StatelessWidget {
   final GameController _gameController = GameController();
@@ -14,10 +16,6 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    int crossAxisCount = (screenWidth / 200)
-        .floor(); // Assuming each game item has a width of 200, adjust this value according to your item width
-
     return FutureBuilder(
       future: _getGames(context),
       //future: _gameController.index(),
@@ -45,19 +43,14 @@ class HomeView extends StatelessWidget {
           return const Text('No games found.');
         }
 
-        return GridView.builder(
-          itemCount: games.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: crossAxisCount,
-            childAspectRatio: 0.5,
+        return SingleChildScrollView(
+          child: Column(
+            children: [
+              RecentlyPlayedWidget(games: games.sublist(0, 10)),
+              const SizedBox(height: 25),
+              LibraryWidget(games: games),
+            ],
           ),
-          itemBuilder: (_, i) {
-            final current = games.elementAt(i);
-
-            return GameItemWidget(
-              reducedGameInfo: current,
-            );
-          },
         );
       },
     );
