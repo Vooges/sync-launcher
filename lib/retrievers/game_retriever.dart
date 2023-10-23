@@ -24,12 +24,31 @@ class GameRetriever {
       }
     }
 
-    if (foundGames.isEmpty){
-      try {
-        foundGames.addAll(await localRetriever.retrieve());
-      } catch (exception) {
-        log(exception.toString());
+    try {
+      List<GameInfo> locallyFoundGames = await localRetriever.retrieve();
+
+      if (locallyFoundGames.isNotEmpty){
+        if (foundGames.isEmpty) {
+          foundGames.addAll(locallyFoundGames);
+        } else {
+          for (GameInfo game in locallyFoundGames) {
+            GameInfo? foundGame = foundGames.where((element) => element.appId == game.appId).firstOrNull;
+
+            if (foundGame == null){
+              foundGames.add(game);
+            } else {
+              foundGame.gridImagePath = game.gridImagePath;
+              foundGame.heroImagePath = game.heroImagePath;
+              foundGame.iconImagePath = game.iconImagePath;
+              foundGame.installSize = game.installSize;
+              foundGame.description = game.description;
+              foundGame.dlc = game.dlc;
+            }
+          }
+        }
       }
+    } catch (exception) {
+      log(exception.toString());
     }
 
     await _insertIntoDatabase(gameList: foundGames);

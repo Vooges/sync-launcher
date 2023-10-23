@@ -23,9 +23,11 @@ class DetailedGameInformationWidget extends StatelessWidget {
           decoration: BoxDecoration(
             image: DecorationImage(
               image: ImageResolver.createImage(
+                height: heroHeight,
+                width: screenWidth,
                 imageType: ImageType.hero,
                 path: gameInfo.heroImagePath,
-                fit: BoxFit.fitWidth
+                fit: BoxFit.cover
               ).image
             )
           )
