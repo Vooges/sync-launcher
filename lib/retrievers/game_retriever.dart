@@ -42,6 +42,7 @@ class GameRetriever {
               foundGame.iconImagePath = game.iconImagePath;
               foundGame.installSize = game.installSize;
               foundGame.description = game.description;
+              foundGame.dlc = game.dlc;
             }
           }
         }

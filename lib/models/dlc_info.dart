@@ -11,13 +11,11 @@ class DLCInfo {
     required this.title,
     required this.appId,
     required this.parentAppId,
-    int? id,
-    int? parentId,
-    String? imagePath,
-    int? installSize
-  }) : id = id ?? 0,
-    parentId = parentId ?? 0, 
-    installSize = installSize ?? 0;
+    this.id = 0,
+    this.parentId = 0,
+    this.imagePath,
+    this.installSize = 0
+  });
 
   DLCInfo.fromMap({required Map<String, Object?> dlc}) :
   id = dlc['id'] as int,
