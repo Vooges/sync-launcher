@@ -56,13 +56,7 @@ class _SyncScaffoldState extends State<SyncScaffold> {
         child: StatusBarWidget(),
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 25,
-            vertical: 12.5,
-          ),
-          child: selectedViewState.view,
-        ),
+        child: selectedViewState.view,
       ),
     );
   }
