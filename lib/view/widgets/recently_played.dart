@@ -15,7 +15,7 @@ class RecentlyPlayedWidget extends StatelessWidget {
       children: [
         Text(
           'Recently played',
-          style: Theme.of(context).textTheme.headlineMedium,
+          style: Theme.of(context).textTheme.displayMedium,
         ),
         const SizedBox(height: 12.5),
         SingleChildScrollView(
