@@ -17,24 +17,15 @@ class GameItemWidget extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => GameView(
-                gameId: reducedGameInfo.id
-              ),
+              builder: (context) => GameView(gameId: reducedGameInfo.id),
             ),
           );
         },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            ImageResolver.createImage(imageType: ImageType.grid, path: reducedGameInfo.gridImagePath, height: 300, fit: BoxFit.fitWidth),
-            Padding(
-              padding: const EdgeInsets.all(15),
-              child: Text(
-                reducedGameInfo.title,
-                style: Theme.of(context).textTheme.titleMedium,
-              )
-            )
-          ],
+        child: ImageResolver.createImage(
+          imageType: ImageType.grid,
+          path: reducedGameInfo.gridImagePath,
+          height: 300,
+          fit: BoxFit.fitHeight,
         ),
       ),
     );
