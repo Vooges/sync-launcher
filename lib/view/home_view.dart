@@ -44,12 +44,15 @@ class HomeView extends StatelessWidget {
         }
 
         return SingleChildScrollView(
-          child: Column(
-            children: [
-              RecentlyPlayedWidget(games: games.sublist(0, 10)),
-              const SizedBox(height: 25),
-              LibraryWidget(games: games),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.all(25),
+            child: Column(
+              children: [
+                RecentlyPlayedWidget(games: games.sublist(0, 10)),
+                const SizedBox(height: 25),
+                LibraryWidget(games: games),
+              ],
+            ),
           ),
         );
       },

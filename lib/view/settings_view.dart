@@ -9,9 +9,9 @@ class SettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<ListView>(
+    return FutureBuilder<Widget?>(
       future: _createLauncherInstallPathWidgets(), 
-      builder: (BuildContext context, AsyncSnapshot<ListView> snapshot){
+      builder: (BuildContext context, AsyncSnapshot<Widget?> snapshot){
         if (snapshot.hasData){
           return snapshot.data!;
         } else {
@@ -21,7 +21,7 @@ class SettingsView extends StatelessWidget {
     );
   }
 
-  Future<ListView> _createLauncherInstallPathWidgets() async{
+  Future<Widget?> _createLauncherInstallPathWidgets() async{
     List<Widget> widgets = List.empty(growable: true);
 
     List<LauncherInfo> launchers = await _settingsController.getLaunchers();
@@ -36,6 +36,7 @@ class SettingsView extends StatelessWidget {
         onChanged: (text) async {
           await _settingsController.setLauncherInstallPath(launcherId: launcher.id, installPath: text);
         }));
+
       widgets.add(TextButton(
         onPressed: () async {
           try {
@@ -48,8 +49,11 @@ class SettingsView extends StatelessWidget {
       ));
     }
 
-    return ListView(
-      children: widgets,
+    return Padding(
+      padding: const EdgeInsets.all(25),
+      child: ListView(
+        children: widgets,
+      ),
     );
   }
 }
