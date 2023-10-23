@@ -24,10 +24,10 @@ class DetailedGameInformationWidget extends StatelessWidget {
           child: Positioned(
             child: ShaderMask(
               shaderCallback: (rect) {
-                return const LinearGradient(
+                return LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [Color(0xff222020), Colors.transparent],
+                  colors: [Theme.of(context).colorScheme.background, Colors.transparent],
                   
                 ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height));
               },
