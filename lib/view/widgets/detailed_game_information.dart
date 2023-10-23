@@ -27,7 +27,8 @@ class DetailedGameInformationWidget extends StatelessWidget {
                 return const LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [Colors.black, Colors.transparent],
+                  colors: [Color(0xff222020), Colors.transparent],
+                  
                 ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height));
               },
               blendMode: BlendMode.dstIn,
