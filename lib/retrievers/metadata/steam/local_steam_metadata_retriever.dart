@@ -5,16 +5,16 @@ import 'package:collection/collection.dart';
 
 class LocalSteamMetadataRetriever {
   final String steamBasePath;
-  final String userId = '479840747';
+  final String steam32Id;
 
-  LocalSteamMetadataRetriever({required this.steamBasePath});
+  LocalSteamMetadataRetriever({required this.steamBasePath, required this.steam32Id});
 
   /// Attempts to get the description for the app.
   /// 
   /// If the cache file for the app cannot be found, null is returned. 
   /// It also returns null if the descriptions object is missing.
   Future<String?> getDescription({required String appId}) async {
-    final String fullPath = '$steamBasePath/userdata/$userId/config/librarycache';
+    final String fullPath = '$steamBasePath/userdata/$steam32Id/config/librarycache';
 
     final Directory libraryCacheDirectory = Directory(fullPath);
     final File? appCache = (await libraryCacheDirectory.list().toList()).whereType<File>()

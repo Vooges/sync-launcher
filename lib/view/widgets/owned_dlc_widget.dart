@@ -9,7 +9,7 @@ class OwnedDLCWidget extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    const  double width = 230;
+    const double width = 230;
     const double height = width / 2;
 
     if (ownedDLC.isEmpty){
@@ -21,12 +21,9 @@ class OwnedDLCWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Owned DLC',
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 36
-            ),
+            style: Theme.of(context).textTheme.displaySmall,
           ),
           const SizedBox(height: 20),
           Expanded(
@@ -34,7 +31,7 @@ class OwnedDLCWidget extends StatelessWidget {
               itemCount: ownedDLC.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2, 
-                childAspectRatio: 1.8,
+                childAspectRatio: 2.1,
                 mainAxisSpacing: 10,
                 crossAxisSpacing: 10
               ), 

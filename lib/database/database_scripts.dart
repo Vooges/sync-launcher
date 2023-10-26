@@ -35,14 +35,6 @@ class DatabaseScripts {
       FOREIGN KEY (parent_id) REFERENCES games(id) ON DELETE CASCADE
     );
 
-    CREATE TABLE users (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      unique_launcher_identifier STRING NOT NULL,
-      launcher_id INTEGER NOT NULL,
-
-      FOREIGN KEY (launcher_id) REFERENCES launchers(id) ON DELETE CASCADE
-    );
-
     CREATE TABLE sessions (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       game_id INTEGER NOT NULL,
@@ -51,11 +43,28 @@ class DatabaseScripts {
 
       FOREIGN KEY (game_id) REFERENCES games(id) ON DELETE CASCADE
     );
+
+    CREATE TABLE account_values (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      launcher_id INTEGER NOT NULL,
+      value TEXT,
+      name TEXT NOT NULL,
+
+      FOREIGN KEY (launcher_id) REFERENCES launchers(id) ON DELETE CASCADE
+    );
   ''';
 
   static const String insertLaunchers = '''
     INSERT INTO launchers VALUES
-      (NULL, 'Steam', 'assets/images/launchers/steam/logo.png', NULL),
-      (NULL, 'Epic Games', 'assets/images/launchers/epic_games/logo.png', NULL);
+      (1, 'Steam', 'assets/images/launchers/steam/logo.png', NULL),
+      (2, 'Epic Games', 'assets/images/launchers/epic_games/logo.png', NULL);
+  ''';
+
+  // TODO: magic value '1' should be retrieved from the database.
+  static const String insertAccountValues = '''
+    INSERT INTO account_values VALUES 
+      (NULL, 1, NULL, 'steamId'),
+      (NULL, 1, NULL, 'steam32Id'),
+      (NULL, 1, NULL, 'steam64Id')
   ''';
 }

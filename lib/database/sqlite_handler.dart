@@ -104,6 +104,7 @@ class SqliteHandler {
         onCreate: (Database database, int version) async {
           await database.execute(DatabaseScripts.create);
           await database.execute(DatabaseScripts.insertLaunchers);
+          await database.execute(DatabaseScripts.insertAccountValues);
         }
       )
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sync_launcher/controllers/settings_controller.dart';
+import 'package:sync_launcher/models/account_value.dart';
 import 'package:sync_launcher/models/launcher_info.dart';
 
 class SettingsView extends StatelessWidget {
@@ -21,12 +22,16 @@ class SettingsView extends StatelessWidget {
     );
   }
 
-  Future<Widget?> _createLauncherInstallPathWidgets() async{
+  Future<Widget?> _createLauncherInstallPathWidgets() async {
     List<Widget> widgets = List.empty(growable: true);
 
     List<LauncherInfo> launchers = await _settingsController.getLaunchers();
 
     for (LauncherInfo launcher in launchers) {
+      List<AccountValue> accountValues = await _settingsController.getLauncherAccountValues(id: launcher.id);
+
+      widgets.add(Text(launcher.title));
+
       widgets.add(TextFormField(
         initialValue: launcher.installPath,
         decoration: InputDecoration(
@@ -42,11 +47,29 @@ class SettingsView extends StatelessWidget {
           try {
             await _settingsController.runGameRetriever(launcherId: launcher.id);
           } catch (exception){
-            //
+            // TODO: Show error on screen.
           }
         }, 
         child: const Text('Retrieve games')
       ));
+
+      for (AccountValue accountValue in accountValues) {
+        widgets.add(TextFormField(
+          initialValue: accountValue.value,
+          decoration: InputDecoration(
+            border: const UnderlineInputBorder(),
+            labelText: accountValue.name
+          ),
+          onChanged: (text) async {
+            accountValue.value = text;
+            try {
+              await _settingsController.updateAccountValueForLauncher(value: accountValue);
+            } catch (exception){
+              // TODO: Show error on screen.
+            }
+          },
+        ));
+      }
     }
 
     return Padding(

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:sync_launcher/helpers/acf_converter.dart';
@@ -11,8 +10,8 @@ import 'package:sync_launcher/retrievers/metadata/steam/local_steam_metadata_ret
 class LocalSteamRetriever extends BaseLocalGameRetriever {
   late final LocalSteamMetadataRetriever metadataRetriever;
 
-  LocalSteamRetriever({required super.launcherBasePath}) {
-    metadataRetriever = LocalSteamMetadataRetriever(steamBasePath: launcherBasePath);
+  LocalSteamRetriever({required super.launcherBasePath, required String steam32Id}) {
+    metadataRetriever = LocalSteamMetadataRetriever(steamBasePath: launcherBasePath, steam32Id: steam32Id);
   }
 
   @override

@@ -20,5 +20,5 @@ Steam => C:\Program Files (x86)\Steam
     Crusader Kings II launch url = steam://rungameid/203770
     - 203770 is the appId
 
-    C:\Program Files (x86)\Steam\appcache\librarycache contains header, icon, grid and banner images for the library.
+    C:\Program Files (x86)\Steam\appcache\librarycache contains header, icon, grid and banner images for the library. THIS FOLDER CONTAINS THOSE FOR THE ENTIRE LIBRARY!
     C:\Program Files (x86)\Steam\userdata\$userId\config\librarycache contains metadata and more for all(?) games in the the user's library.

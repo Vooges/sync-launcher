@@ -32,7 +32,7 @@ class HomeView extends StatelessWidget {
               const SizedBox(
                 height: 25,
               ),
-              const LinearProgressIndicator(),
+              const RefreshProgressIndicator(),
             ],
           );
         }
@@ -40,7 +40,9 @@ class HomeView extends StatelessWidget {
         final List<ReducedGameInfo> games = snapshot.data!;
 
         if (games.isEmpty) {
-          return const Text('No games found.');
+          return const Center(
+            child: Text('No games found.'),
+          );
         }
 
         return SingleChildScrollView(

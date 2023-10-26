@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sync_launcher/controllers/game_controller.dart';
 import 'package:sync_launcher/models/game_info.dart';
 import 'package:sync_launcher/view/widgets/detailed_game_information.dart';
-import 'package:sync_launcher/view/widgets/status_bar.dart';
 
 class GameView extends StatelessWidget {
   final GameController _gameController = GameController();
@@ -18,10 +17,20 @@ class GameView extends StatelessWidget {
           if (snapshot.hasData) {
             final GameInfo gameInfo = snapshot.data!;
 
-            return DetailedGameInformationWidget(key: key, gameInfo: gameInfo);
+            final screenSize = MediaQuery.of(context).size;
+
+            return SingleChildScrollView(
+              child: SizedBox(
+                width: screenSize.width,
+                height: screenSize.height,
+                child: DetailedGameInformationWidget(key: key, gameInfo: gameInfo)
+              )
+            );
           }
 
-          return const Text('Could not load data.');
+          return const Center(
+            child: Text('Could not load data.'),
+          );
         }
       )
     );
