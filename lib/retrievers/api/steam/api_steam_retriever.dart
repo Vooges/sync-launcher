@@ -1,12 +1,14 @@
 import 'package:sync_launcher/models/launcher_info.dart';
 import 'package:sync_launcher/retrievers/api/base_api_game_retriever.dart';
+import 'package:sync_launcher/retrievers/metadata/steam/local_steam_metadata_retriever.dart';
 import 'package:xml/xml.dart' as xml;
 import 'package:http/http.dart' as http;
 
 import 'package:sync_launcher/models/game_info.dart';
 
 class APISteamRetriever extends BaseAPIGameRetriever {
-  APISteamRetriever({required super.userId});
+  final LocalSteamMetadataRetriever metadataRetriever;
+  APISteamRetriever({required super.userId, required this.metadataRetriever});
 
   @override
   Future<List<GameInfo>> retrieve() async {
@@ -29,7 +31,6 @@ class APISteamRetriever extends BaseAPIGameRetriever {
       for (final game in games) {
         final appId = game.findElements('appID').first.innerText;
         final title = game.findElements('name').first.innerText;
-        final logo = game.findElements('logo').first.innerText;
         final storeLink = game.findElements('storeLink').first.innerText;
         final hoursOnRecord = game.findElements('hoursOnRecord').isNotEmpty
             ? double.parse(game.findElements('hoursOnRecord').first.innerText)
@@ -43,9 +44,9 @@ class APISteamRetriever extends BaseAPIGameRetriever {
             title:  'Steam',
             imagePath: 'assets/launchers/steam/logo.svg',
           ),
-          iconImagePath: logo, // TODO: find the actual logo.
-          gridImagePath: logo, // TODO: find the actual grid image.
-          heroImagePath: logo, // TODO: find the actual hero image.
+          iconImagePath: metadataRetriever.getIconImagePath(appId: appId),
+          gridImagePath: metadataRetriever.getGridImagePath(appId: appId),
+          heroImagePath: metadataRetriever.getHeroImagePath(appId: appId),
           version: 'Unknown', // TODO: Add version if available.
           installSize: 0, // TODO: Add install size if available.
           dlc: [], // TODO: Add DLC info if available.

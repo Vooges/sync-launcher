@@ -18,61 +18,79 @@ class DetailedGameInformationWidget extends StatelessWidget {
 
     return Stack(
       children: [
-        SizedBox(
+        Container( // Hero image container.
           width: screenSize.width,
-          height: screenSize.height / 2,
-          child: Positioned(
-            child: ShaderMask(
-              shaderCallback: (rect) {
-                return LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Theme.of(context).colorScheme.background, Colors.transparent],
-                  
-                ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height));
-              },
-              blendMode: BlendMode.dstIn,
-              child: ImageResolver.createImage(
+          height: screenSize.height / 1.632,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: ImageResolver.createImage(
                 imageType: ImageType.hero,
                 path: gameInfo.heroImagePath,
-                fit: BoxFit.cover,
+              ).image
+            )
+          )
+        ),
+        Container( // Hero image gradient container.
+          width: screenSize.width,
+          height: screenSize.height / 1.632,
+          decoration: BoxDecoration(
+          color: Colors.white,
+          gradient: LinearGradient(
+              begin: FractionalOffset.topCenter,
+              end: FractionalOffset.bottomCenter,
+              colors: <Color>[
+                const Color(0xff222020).withOpacity(0.3),
+                const Color(0xff222020).withOpacity(1.0),
+              ],
+              stops: const <double>[
+                0.0,
+                0.85
+              ]
+            )
+          ),
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: screenSize.height / 1.8,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      gameInfo.title,
+                      style: Theme.of(context).textTheme.displayLarge,
+                    ),
+                    const SizedBox(height: 10),
+                    ConstrainedBox(
+                      constraints:
+                          BoxConstraints.tightFor(width: screenSize.width / 2),
+                      child: Text(
+                        gameInfo.description ??
+                            'The description for the game has not been found. The metadata service will try to find the description online. This will be done as a background process and requires no user input. Retrieving the data might take a while.',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                    ),
+                    const Spacer(),
+                    ConstrainedBox(
+                      constraints: const BoxConstraints.tightFor(width: 250),
+                      child: LaunchGameButtonWidget(
+                        gameLaunchURL: gameInfo.launchURL,
+                        launcherImagePath: gameInfo.launcherInfo.imagePath,
+                        installed: gameInfo.installSize > 0,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
+            AdditionalGameInformationWidget(gameInfo: gameInfo),
+          ],
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 50),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                gameInfo.title,
-                style: Theme.of(context).textTheme.displayLarge,
-              ),
-              ConstrainedBox(
-                constraints:
-                    BoxConstraints.tightFor(width: screenSize.width / 2),
-                child: Text(
-                  gameInfo.description ??
-                      'The description for the game has not been found. The metadata service will try to find the description online. This will be done as a background process and requires no user input. Retrieving the data might take a while.',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-              ),
-              SizedBox(height: screenSize.height / 4),
-              ConstrainedBox(
-                constraints: const BoxConstraints.tightFor(width: 250),
-                child: LaunchGameButtonWidget(
-                  gameLaunchURL: gameInfo.launchURL,
-                  launcherImagePath: gameInfo.launcherInfo.imagePath,
-                  installed: gameInfo.installSize > 0,
-                ),
-              ),
-              const SizedBox(height: 25),
-              AdditionalGameInformationWidget(gameInfo: gameInfo),
-            ],
-          ),
-        ),
-      ],
+      ]
     );
   }
 }

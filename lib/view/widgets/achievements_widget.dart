@@ -18,12 +18,9 @@ class AchievementsWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          const Text(
+           Text(
             'Achievements',
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 36
-            ),
+            style: Theme.of(context).textTheme.displaySmall,
           ),
           const SizedBox(height: 20),
           Expanded(
