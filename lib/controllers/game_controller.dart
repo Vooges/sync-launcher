@@ -10,10 +10,9 @@ class GameController {
       bool? installed,
       List<int>? launcherIds,
       List<int>? categoryIds,
-      int? offset
     }) async {
       // TODO: implement filters.
-      return await _gameRepository.getReducedGames(offset: offset);
+      return await _gameRepository.getReducedGames();
     }
 
     Future<GameInfo> get({required int id}) async {

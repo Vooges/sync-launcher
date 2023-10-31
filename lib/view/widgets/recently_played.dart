@@ -24,8 +24,12 @@ class RecentlyPlayedWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: games
                 .map((e) => [
-                      GameItemWidget(reducedGameInfo: e),
-                      const SizedBox(width: 15)
+                      SizedBox(
+                        width: 250,
+                        height: 375,
+                        child: GameItemWidget(reducedGameInfo: e),
+                      ),
+                      const SizedBox(width: 10)
                     ])
                 .flattened
                 .toList(),

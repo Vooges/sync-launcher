@@ -9,11 +9,8 @@ import 'package:sync_launcher/models/reduced_game_info.dart';
 class GameRepository extends BaseRepository{
   final DLCRepository _dlcRepository = DLCRepository();
   final LauncherRepository _launcherRepository = LauncherRepository();
-  final int _limit = 100;
 
-  Future<List<ReducedGameInfo>> getReducedGames({int? offset}) async {
-    offset = offset ?? 0;
-
+  Future<List<ReducedGameInfo>> getReducedGames() async {
     String query = '''
       SELECT 
         g.id, 
@@ -25,11 +22,10 @@ class GameRepository extends BaseRepository{
         l.image_path as launcher_image_path 
       FROM games g 
       INNER JOIN launchers l 
-      ON g.launcher_id = l.id
-      LIMIT ? OFFSET ?;
+      ON g.launcher_id = l.id;
     ''';
 
-    List<Map<String, Object?>> results = await super.sqliteHandler.selectRaw(query: query, parameters: [_limit, offset]);
+    List<Map<String, Object?>> results = await super.sqliteHandler.selectRaw(query: query);
 
     return results.map((e) => ReducedGameInfo.fromMap(game: e)).toList();
   }

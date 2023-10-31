@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sync_launcher/controllers/game_controller.dart';
 import 'package:sync_launcher/models/reduced_game_info.dart';
-import 'package:sync_launcher/view/widgets/game_item.dart';
 import 'package:sync_launcher/view/widgets/library.dart';
 import 'package:sync_launcher/view/widgets/recently_played.dart';
 
@@ -32,7 +31,7 @@ class HomeView extends StatelessWidget {
               const SizedBox(
                 height: 25,
               ),
-              const RefreshProgressIndicator(),
+              const CircularProgressIndicator(),
             ],
           );
         }
@@ -49,8 +48,9 @@ class HomeView extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(25),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                RecentlyPlayedWidget(games: games.sublist(0, 10)),
+                RecentlyPlayedWidget(games: games.sublist(0, 5)),
                 const SizedBox(height: 25),
                 LibraryWidget(games: games),
               ],
