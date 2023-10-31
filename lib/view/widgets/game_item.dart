@@ -12,17 +12,39 @@ class GameItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        context.read<SelectedViewState>().setView(GameView(gameId: reducedGameInfo.id));
-      },
-      child: ImageResolver.createImage(
-        imageType: ImageType.grid,
-        path: reducedGameInfo.gridImagePath,
-        width: 250,
-        height: 350,
-        fit: BoxFit.fitHeight,
-      ),
+    Widget image = ImageResolver.createImage(
+      imageType: ImageType.grid,
+      path: reducedGameInfo.gridImagePath,
+      fit: BoxFit.fitHeight,
     );
+
+    Widget item = Stack(
+      children: [
+        image,
+        Positioned.fill(
+          child: Align(
+            alignment: Alignment.bottomRight,
+            child: ImageResolver.createImage(imageType: ImageType.icon, path: reducedGameInfo.launcherInfo.imagePath, width: 43, height: 43),
+          )
+        )
+      ],
+    );
+
+    Widget child = (reducedGameInfo.installed) 
+      ? item
+      : ColorFiltered(
+          colorFilter: ColorFilter.mode(
+            Colors.grey.shade700,
+            BlendMode.modulate,
+          ),
+          child: item
+        );
+
+    return InkWell(
+        onTap: () {
+          context.read<SelectedViewState>().setView(GameView(gameId: reducedGameInfo.id));
+        },
+        child: child
+      );
   }
 }
