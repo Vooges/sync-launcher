@@ -3,6 +3,8 @@ import 'package:sync_launcher/database/database_scripts.dart';
 
 class SqliteHandler {
   static SqliteHandler? _instance;
+  static Database? _database;
+  
   final String _fileName = 'sync.db';
 
   SqliteHandler._internal(){
@@ -17,11 +19,9 @@ class SqliteHandler {
   }
   
   Future<List<Map<String, Object?>>> selectRaw({required String query, List<Object?>? parameters}) async{
-    Database database = await _openDatabase();
+    await _openDatabase();
 
-    List<Map<String, Object?>> results = await database.rawQuery(query, parameters);
-
-    database.close();
+    List<Map<String, Object?>> results = await _database!.rawQuery(query, parameters);
 
     return results;
   }
@@ -37,9 +37,9 @@ class SqliteHandler {
     int? limit,
     int? offset
   }) async {
-    Database database = await _openDatabase();
+    await _openDatabase();
 
-    List<Map<String, Object?>> result = await database.query(
+    List<Map<String, Object?>> result = await _database!.query(
       table, 
       columns: columns, 
       where: where, 
@@ -51,62 +51,54 @@ class SqliteHandler {
       offset: offset
     );
 
-    database.close();
-
     return result;
   }
 
   Future<int> insert({required String table, required Map<String, Object?> values}) async {
-    Database database = await _openDatabase();
+    await _openDatabase();
 
-    int id = await database.insert(table, values);
-
-    database.close();
+    int id = await _database!.insert(table, values);
 
     return id;
   }
 
   Future<int> insertRaw({required String query}) async {
-    Database database = await _openDatabase();
+    await _openDatabase();
 
-    int id = await database.rawInsert(query);
-
-    database.close();
+    int id = await _database!.rawInsert(query);
 
     return id;
   }
 
   Future<int> updateRaw({required String query, List<Object?>? parameters}) async {
-    Database database = await _openDatabase();
+    await _openDatabase();
 
-    int id = await database.rawUpdate(query, parameters);
-
-    database.close();
+    int id = await _database!.rawUpdate(query, parameters);
 
     return id;
   }
 
   Future<int> deleteRaw({required String query, List<Object?>? parameters}) async {
-    Database database = await _openDatabase();
+    await _openDatabase();
 
-    int count = await database.rawDelete(query, parameters);
-
-    database.close();
+    int count = await _database!.rawDelete(query, parameters);
 
     return count;
   }
 
-  Future<Database> _openDatabase() async {
-    return await databaseFactoryFfi.openDatabase(
-      _fileName,
-      options: OpenDatabaseOptions(
-        version: 1,
-        onCreate: (Database database, int version) async {
-          await database.execute(DatabaseScripts.create);
-          await database.execute(DatabaseScripts.insertLaunchers);
-          await database.execute(DatabaseScripts.insertAccountValues);
-        }
-      )
-    );
+  Future _openDatabase() async {
+    if (_database == null){
+      _database = await databaseFactoryFfi.openDatabase(
+        _fileName,
+        options: OpenDatabaseOptions(
+          version: 1,
+          onCreate: (Database database, int version) async {
+            await database.execute(DatabaseScripts.create);
+            await database.execute(DatabaseScripts.insertLaunchers);
+            await database.execute(DatabaseScripts.insertAccountValues);
+          }
+        )
+      );
+    }
   }
 }

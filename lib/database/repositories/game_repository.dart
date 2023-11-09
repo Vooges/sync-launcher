@@ -10,6 +10,69 @@ class GameRepository extends BaseRepository{
   final DLCRepository _dlcRepository = DLCRepository();
   final LauncherRepository _launcherRepository = LauncherRepository();
 
+  Future<int?> getGameIdByAppId({required String appId, required int launcherId}) async {
+    const String query = '''
+      SELECT id 
+      FROM games
+      WHERE app_id LIKE ?
+      AND launcher_id = ?;
+    ''';
+
+    final List<Object?> parameters = [appId, launcherId];
+
+    final Map<String, Object?>? result = (await super.sqliteHandler.selectRaw(query: query, parameters: parameters)).firstOrNull;
+    final int? gameId = (result == null) ? null : result['id'] as int;
+
+    return gameId;
+  }
+
+  Future<int?> getGameIdByTitle({required String appId, required int launcherId}) async {
+    const String query = '''
+      SELECT id 
+      FROM games
+      WHERE title LIKE ?
+      AND launcher_id = ?;
+    ''';
+
+    final List<Object?> parameters = [appId, launcherId];
+
+    final Map<String, Object?>? result = (await super.sqliteHandler.selectRaw(query: query, parameters: parameters)).firstOrNull;
+    final int? gameId = (result == null) ? null : result['id'] as int;
+
+    return gameId;
+  }
+
+  Future<List<GameInfo>> getGamesWithMissingMetadata() async {
+    const String query = '''
+      SELECT 
+        g.id, 
+        g.title, 
+        g.app_id, 
+        g.launch_url, 
+        g.grid_image_path,
+        g.icon_image_path,
+        g.hero_image_path,
+        l.id as launcher_id, 
+        l.title as launcher_title, 
+        l.image_path as launcher_image_path, 
+        l.install_path as launcher_install_path,
+        g.description, 
+        g.install_size, 
+        g.version 
+      FROM games g 
+      INNER JOIN launchers l 
+      ON l.id = g.launcher_id
+      WHERE g.description IS NULL
+      OR g.grid_image_path IS NULL
+      OR g.icon_image_path IS NULL
+      OR g.hero_image_path IS NULL;
+    ''';
+
+    final List<Map<String, Object?>> results = await super.sqliteHandler.selectRaw(query: query);
+
+    return results.map((e) => GameInfo.fromMap(game: e)).toList();
+  }
+
   Future<List<ReducedGameInfo>> getReducedGames() async {
     String query = '''
       SELECT 
@@ -68,6 +131,7 @@ class GameRepository extends BaseRepository{
     // TODO: Check if it is possible to map complex entities to the essential values needed for this insert statement.
     gameMap.remove('dlc');
     gameMap.remove('launcher');
+    gameMap.remove('categories');
 
     int launcherId = (await _launcherRepository.getLauncherByName(name: launcher.title))!.id;
     gameMap['launcher_id'] = launcherId;
@@ -94,6 +158,41 @@ class GameRepository extends BaseRepository{
 
     for (GameInfo game in gameList) {
       ids.add(await insert(game: game));
+    }
+
+    return ids;
+  }
+
+  Future<int> update({required GameInfo gameInfo}) async {
+    const String query = '''
+      UPDATE games 
+      SET description = ?,
+      
+      version = ?
+      WHERE id = ?;
+    ''';
+
+    //icon_image_path = ?,
+    // grid_image_path = ?,
+    // hero_image_path = ?,
+
+    List<Object?> parameters = [
+      gameInfo.description,
+      // gameInfo.iconImagePath,
+      // gameInfo.gridImagePath,
+      // gameInfo.heroImagePath,
+      gameInfo.version,
+      gameInfo.id
+    ];
+
+    return await super.sqliteHandler.updateRaw(query: query, parameters: parameters);
+  }
+  
+  Future<List<int>> updateMultiple({required List<GameInfo> gameList}) async {
+    List<int> ids = [];
+
+    for (GameInfo gameInfo in gameList){
+      ids.add(await update(gameInfo: gameInfo));
     }
 
     return ids;
