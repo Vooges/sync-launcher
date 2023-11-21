@@ -42,6 +42,12 @@ class ImageResolver {
     ) as Image;
   }
 
+  /// Creates an image widget from a path, and adds the fallback text to the fallback image.
+  /// 
+  /// If the supplied path is an url, it will produce a NetworkImage. If the supplied
+  /// path is an actual path, it will create a FileImage. Finally, if no path is
+  /// supplied, it will create an AssetImage with a default image containing the 
+  /// Sync logo. The imageType is used to provide the correct fallback image.
   static Widget createImageWithTextOnFallback({
     required ImageType imageType, 
     required String fallbackText,
