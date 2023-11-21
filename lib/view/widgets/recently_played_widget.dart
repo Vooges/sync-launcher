@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:sync_launcher/models/reduced_game_info.dart';
-import 'package:sync_launcher/view/widgets/game_item.dart';
+import 'package:sync_launcher/view/widgets/game_item_widget.dart';
 
 class RecentlyPlayedWidget extends StatelessWidget {
   final List<ReducedGameInfo> games;

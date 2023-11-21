@@ -26,7 +26,7 @@ class GameRepository extends BaseRepository{
     return gameId;
   }
 
-  Future<int?> getGameIdByTitle({required String appId, required int launcherId}) async {
+  Future<int?> getGameIdByTitle({required String title, required int launcherId}) async {
     const String query = '''
       SELECT id 
       FROM games
@@ -34,7 +34,7 @@ class GameRepository extends BaseRepository{
       AND launcher_id = ?;
     ''';
 
-    final List<Object?> parameters = [appId, launcherId];
+    final List<Object?> parameters = [title, launcherId];
 
     final Map<String, Object?>? result = (await super.sqliteHandler.selectRaw(query: query, parameters: parameters)).firstOrNull;
     final int? gameId = (result == null) ? null : result['id'] as int;

@@ -12,10 +12,12 @@ class GameItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget image = ImageResolver.createImage(
+    Widget image = ImageResolver.createImageWithTextOnFallback(
       imageType: ImageType.grid,
+      fallbackText: reducedGameInfo.title,
+      context: context,
       path: reducedGameInfo.gridImagePath,
-      fit: BoxFit.fitHeight,
+      fit: BoxFit.cover,
     );
 
     Widget item = Stack(

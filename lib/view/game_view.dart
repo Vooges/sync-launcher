@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sync_launcher/controllers/game_controller.dart';
 import 'package:sync_launcher/models/game_info.dart';
-import 'package:sync_launcher/view/widgets/detailed_game_information.dart';
+import 'package:sync_launcher/view/widgets/detailed_game_information_widget.dart';
 
 class GameView extends StatelessWidget {
   final GameController _gameController = GameController();

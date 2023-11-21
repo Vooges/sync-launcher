@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 class ImageResolver {
   /// Creates an image widget from a path.
@@ -19,8 +19,7 @@ class ImageResolver {
     BlendMode? colorBlendMode, 
     Color? color
   }){
-    // This image is also used as a fallback in case the url or path can't be resolved. 
-    Image defaultImage = Image.asset(
+    Image fallback = Image.asset(
       'assets/images/default/${imageType.name}.png',
       width: width,
       height: height,
@@ -30,7 +29,77 @@ class ImageResolver {
       colorBlendMode: colorBlendMode,
     );
 
-    Image image;
+    return _createImage(
+      imageType: imageType, 
+      fallback: fallback,
+      path: path,
+      height: height,
+      width: width,
+      fit: fit,
+      opacity: opacity,
+      color: color,
+      colorBlendMode: colorBlendMode
+    ) as Image;
+  }
+
+  static Widget createImageWithTextOnFallback({
+    required ImageType imageType, 
+    required String fallbackText,
+    required BuildContext context,
+    String? path, 
+    double? height, 
+    double? width, 
+    BoxFit? fit, 
+    Animation<double>? opacity, 
+    BlendMode? colorBlendMode, 
+    Color? color
+  }){
+    Widget fallback = Stack(
+      children: [
+        Image.asset(
+          'assets/images/default/${imageType.name}.png',
+          width: width,
+          height: height,
+          fit: fit,
+          opacity: opacity,
+          color: color,
+          colorBlendMode: colorBlendMode,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(10), 
+          child: Text(
+            fallbackText, 
+            style: Theme.of(context).textTheme.displaySmall,
+          ),
+        )
+      ],
+    );
+
+    return _createImage(
+      imageType: imageType, 
+      fallback: fallback,
+      path: path,
+      height: height,
+      width: width,
+      fit: fit,
+      opacity: opacity,
+      color: color,
+      colorBlendMode: colorBlendMode
+    );
+  }
+
+  static Widget _createImage({
+    required ImageType imageType, 
+    required Widget fallback,
+    String? path, 
+    double? height, 
+    double? width, 
+    BoxFit? fit, 
+    Animation<double>? opacity, 
+    BlendMode? colorBlendMode, 
+    Color? color,
+  }){
+    Widget image;
 
     // TODO: Handle SVGs.
     if (path != null){
@@ -44,7 +113,7 @@ class ImageResolver {
           color: color,
           colorBlendMode: colorBlendMode,
           errorBuilder: ((context, error, stackTrace) {
-            return defaultImage;
+            return fallback;
           })
         );
       } else if(path.startsWith('assets')){ // path points to an asset.
@@ -57,7 +126,7 @@ class ImageResolver {
           color: color,
           colorBlendMode: colorBlendMode,
           errorBuilder: ((context, error, stackTrace) {
-            return defaultImage;
+            return fallback;
           })
         );
       } else {
@@ -70,12 +139,12 @@ class ImageResolver {
           color: color,
           colorBlendMode: colorBlendMode,
           errorBuilder: ((context, error, stackTrace) {
-            return defaultImage;
+            return fallback;
           })
         );
       }
     } else {
-      image = defaultImage;
+      image = fallback;
     }
 
     return image;

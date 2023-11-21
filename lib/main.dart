@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sync_launcher/state/selected_view_state.dart';
 import 'package:sync_launcher/view/home_view.dart';
 import 'package:sync_launcher/view/settings_view.dart';
-import 'package:sync_launcher/view/widgets/status_bar.dart';
+import 'package:sync_launcher/view/widgets/status_bar_widget.dart';
 
 void main() {
   runApp(
@@ -44,7 +44,6 @@ class SyncScaffold extends StatefulWidget {
   State<SyncScaffold> createState() => _SyncScaffoldState();
 }
 
-// TODO: remove bottomnavigationbar
 class _SyncScaffoldState extends State<SyncScaffold> {
   @override
   Widget build(BuildContext context) {
