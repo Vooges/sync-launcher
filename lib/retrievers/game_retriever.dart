@@ -4,12 +4,15 @@ import 'package:sync_launcher/database/repositories/game_repository.dart';
 import 'package:sync_launcher/models/game_info.dart';
 import 'package:sync_launcher/retrievers/api/base_api_game_retriever.dart';
 import 'package:sync_launcher/retrievers/local/base_local_game_retriever.dart';
+import 'package:sync_launcher/retrievers/metadata/online_metadata_retriever.dart';
 
 class GameRetriever {
   final GameRepository _gameRepository = GameRepository();
 
   BaseAPIGameRetriever? apiRetriever;
   BaseLocalGameRetriever localRetriever;
+
+  final OnlineMetadataRetriever _onlineMetadataRetriever = OnlineMetadataRetriever();
 
   GameRetriever({this.apiRetriever, required this.localRetriever});
 
@@ -52,6 +55,8 @@ class GameRetriever {
     }
 
     await _insertIntoDatabase(gameList: foundGames);
+    
+    _onlineMetadataRetriever.retrieveMetadata();
   }
 
   /// Inserts the provided list of games into the database.

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sync_launcher/helpers/image_resolver.dart';
 import 'package:sync_launcher/models/game_info.dart';
-import 'package:sync_launcher/view/widgets/additional_game_information.dart';
-import 'package:sync_launcher/view/widgets/launch_game_button.dart';
+import 'package:sync_launcher/view/widgets/additional_game_information_widget.dart';
+import 'package:sync_launcher/view/widgets/launch_game_button_widget.dart';
 
 class DetailedGameInformationWidget extends StatelessWidget {
   final GameInfo gameInfo;

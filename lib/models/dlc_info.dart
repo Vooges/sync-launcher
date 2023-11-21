@@ -34,7 +34,7 @@ class DLCInfo {
       'parent_id': parentId,
       'parent_app_id': parentAppId,
       'image_path': imagePath,
-      'install_size': installSize
+      'install_size': installSize,
     };
   }
 }

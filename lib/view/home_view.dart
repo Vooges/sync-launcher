@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sync_launcher/controllers/game_controller.dart';
 import 'package:sync_launcher/models/reduced_game_info.dart';
-import 'package:sync_launcher/view/widgets/library.dart';
-import 'package:sync_launcher/view/widgets/recently_played.dart';
+import 'package:sync_launcher/view/widgets/library_widget.dart';
+import 'package:sync_launcher/view/widgets/recently_played_widget.dart';
 
 class HomeView extends StatelessWidget {
   final GameController _gameController = GameController();
@@ -25,7 +25,7 @@ class HomeView extends StatelessWidget {
               Center(
                 child: Text(
                   'Loading games...',
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
               const SizedBox(
