@@ -15,7 +15,7 @@ class GameItemWidget extends StatelessWidget {
     Widget image = ImageResolver.createImageWithTextOnFallback(
       imageType: ImageType.grid,
       fallbackText: reducedGameInfo.title,
-      context: context,
+      textStyle: Theme.of(context).textTheme.displaySmall,
       path: reducedGameInfo.gridImagePath,
       fit: BoxFit.cover,
     );

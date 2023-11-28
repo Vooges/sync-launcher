@@ -57,10 +57,11 @@ class DatabaseScripts {
   static const String insertLaunchers = '''
     INSERT INTO launchers VALUES
       (1, 'Steam', 'assets/images/launchers/steam/logo.png', NULL),
-      (2, 'Epic Games', 'assets/images/launchers/epic_games/logo.png', NULL);
+      (2, 'Epic Games', 'assets/images/launchers/epic_games/logo.png', NULL),
+      (3, 'Ubisoft Connect', 'assets/images/launchers/ubisoft_connect/logo.png', NULL);
   ''';
 
-  // TODO: magic value '1' should be retrieved from the database.
+  // TODO: magic value '1' *should* be retrieved from the database.
   static const String insertAccountValues = '''
     INSERT INTO account_values VALUES 
       (NULL, 1, NULL, 'steamId'),

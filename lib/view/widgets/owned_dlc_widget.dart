@@ -38,9 +38,11 @@ class OwnedDLCWidget extends StatelessWidget {
               itemBuilder: (context, i) {
                 DLCInfo dlcInfo = ownedDLC[i];
 
-                return ImageResolver.createImage(
+                return ImageResolver.createImageWithTextOnFallback(
                   imageType: ImageType.header, 
                   path: dlcInfo.imagePath,
+                  fallbackText: dlcInfo.title,
+                  textStyle: Theme.of(context).textTheme.displaySmall
                 );
               }
             )

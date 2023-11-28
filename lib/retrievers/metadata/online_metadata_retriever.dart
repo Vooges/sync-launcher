@@ -45,10 +45,16 @@ class OnlineMetadataRetriever {
       .map((e) => e.title)
       .toList();
 
+    List<String> uplayTitles = games
+      .where((element) => element.launcherInfo.title == 'Ubisoft Connect')
+      .map((e) => e.title)
+      .toList();
+
     List<GameInfo> foundGames = [];
 
     foundGames.addAll(await _getSteamMetadataFromServer(appIds: steamAppIds));
-    foundGames.addAll(await _getEpicGamesMetadata(titles: epicGamesTitles));
+    foundGames.addAll(await _getOtherLauncherMetadata(titles: epicGamesTitles, launcherTitle: 'Epic Games'));
+    foundGames.addAll(await _getOtherLauncherMetadata(titles: uplayTitles, launcherTitle: 'Ubisoft Connect'));
 
     await _gameRepository.updateMultiple(gameList: foundGames);
 
@@ -94,7 +100,7 @@ class OnlineMetadataRetriever {
     return foundGames;
   }
 
-  Future<List<GameInfo>> _getEpicGamesMetadata({required List<String> titles}) async {
+  Future<List<GameInfo>> _getOtherLauncherMetadata({required List<String> titles, required String launcherTitle}) async {
     final Map<String, dynamic> queryParameters = {
       'titles': titles
     };
@@ -112,10 +118,10 @@ class OnlineMetadataRetriever {
         List<dynamic> dlc = element['dlc'] as List<dynamic>;
         List<DLCInfo> dlcInfo = dlc.map((e) => DLCInfo.fromMap(dlc: e)).toList();
 
-        int launcherId = (await _launcherRepository.getLauncherByName(name: 'Epic Games'))!.id;
+        int launcherId = (await _launcherRepository.getLauncherByName(name: launcherTitle))!.id;
 
         element['launcher_id'] = launcherId;
-        element['launcher_title'] = 'Epic Games';
+        element['launcher_title'] = launcherTitle;
         element['launcher_image_path'] = '';
 
         int? gameId = await _gameRepository.getGameIdByTitle(title: element['title'] as String, launcherId: launcherId);

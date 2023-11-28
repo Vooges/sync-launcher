@@ -6,6 +6,7 @@ import 'package:sync_launcher/retrievers/api/steam/api_steam_retriever.dart';
 import 'package:sync_launcher/retrievers/game_retriever.dart';
 import 'package:sync_launcher/retrievers/local/epic_games/local_epic_games_retriever.dart';
 import 'package:sync_launcher/retrievers/local/steam/local_steam_retriever.dart';
+import 'package:sync_launcher/retrievers/local/ubisoft_connect/local_ubisoft_connect_retriever.dart';
 import 'package:sync_launcher/retrievers/metadata/steam/local_steam_metadata_retriever.dart';
 
 class SettingsController {
@@ -81,7 +82,20 @@ class SettingsController {
         }
 
         break;
+      case 'Ubisoft Connect':
+        String? localPath = launcher.installPath;
+
+        if (localPath != null){
+          gameRetriever = GameRetriever(
+            localRetriever: LocalUbisoftConnectRetriever(
+              launcherBasePath: localPath
+            )
+          );
+        }
+
+        break;
     }
-      gameRetriever.retrieveGames();
+      
+    gameRetriever.retrieveGames();
   }
 }

@@ -51,7 +51,7 @@ class ImageResolver {
   static Widget createImageWithTextOnFallback({
     required ImageType imageType, 
     required String fallbackText,
-    required BuildContext context,
+    required TextStyle? textStyle,
     String? path, 
     double? height, 
     double? width, 
@@ -75,7 +75,7 @@ class ImageResolver {
           padding: const EdgeInsets.all(10), 
           child: Text(
             fallbackText, 
-            style: Theme.of(context).textTheme.displaySmall,
+            style: textStyle,
           ),
         )
       ],

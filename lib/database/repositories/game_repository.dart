@@ -63,6 +63,7 @@ class GameRepository extends BaseRepository{
       INNER JOIN launchers l 
       ON l.id = g.launcher_id
       WHERE g.description IS NULL
+      OR g.app_id = 'appId'
       OR g.grid_image_path IS NULL
       OR g.icon_image_path IS NULL
       OR g.hero_image_path IS NULL;
@@ -73,7 +74,12 @@ class GameRepository extends BaseRepository{
     return results.map((e) => GameInfo.fromMap(game: e)).toList();
   }
 
-  Future<List<ReducedGameInfo>> getReducedGames() async {
+  Future<List<ReducedGameInfo>> getReducedGames({
+    String? search,
+    bool? installed,
+    List<int>? launcherIds,
+    List<int>? categoryIds,
+  }) async {
     String query = '''
       SELECT 
         g.id, 
@@ -87,6 +93,29 @@ class GameRepository extends BaseRepository{
       INNER JOIN launchers l 
       ON g.launcher_id = l.id;
     ''';
+
+    List<String> whereClauses = [];
+    List<Object?> whereParameters = [];
+
+    if (search != null) {
+      whereClauses.add('g.title LIKE \'%?%\'');
+      whereParameters.add(search);
+    }
+
+    if (installed != null){
+      String character = (installed) ? '>': '=';
+
+      whereClauses.add('g.install_size $character 0');
+    }
+
+    if (launcherIds != null && launcherIds.isNotEmpty){
+      whereClauses.add('l.id IN (?)');
+      whereParameters.add(launcherIds.join(', '));
+    }
+
+    if (categoryIds != null && categoryIds.isNotEmpty){
+      // TODO: Implement categories.
+    }
 
     List<Map<String, Object?>> results = await super.sqliteHandler.selectRaw(query: query);
 

@@ -3,27 +3,23 @@ import 'package:sync_launcher/models/game_info.dart';
 import 'package:sync_launcher/models/reduced_game_info.dart';
 
 class GameController {
-    final GameRepository _gameRepository = GameRepository();
+  final GameRepository _gameRepository = GameRepository();
 
-    Future<List<ReducedGameInfo>> index({
-      String? search,
-      bool? installed,
-      List<int>? launcherIds,
-      List<int>? categoryIds,
-    }) async {
-      // TODO: implement filters.
-      return await _gameRepository.getReducedGames();
-    }
+  Future<List<ReducedGameInfo>> index({
+    String? search,
+    bool? installed,
+    List<int>? launcherIds,
+    List<int>? categoryIds,
+  }) async {
+    return await _gameRepository.getReducedGames(
+      search: search,
+      installed: installed,
+      launcherIds: launcherIds,
+      categoryIds: categoryIds
+    );
+  }
 
-    Future<GameInfo> get({required int id}) async {
-      return await _gameRepository.getSingleGameInfo(id: id);
-    }
-
-    Future<void> insert({required GameInfo game}) async {
-      await _gameRepository.insert(game: game);
-    }
-
-    Future<void> insertMultiple({required List<GameInfo> gameList}) async {
-      await _gameRepository.insertMultiple(gameList: gameList);
-    }
+  Future<GameInfo> get({required int id}) async {
+    return await _gameRepository.getSingleGameInfo(id: id);
+  }
 }
