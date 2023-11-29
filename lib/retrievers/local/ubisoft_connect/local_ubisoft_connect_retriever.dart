@@ -52,16 +52,16 @@ class LocalUbisoftConnectRetriever extends BaseLocalGameRetriever{
       String commentsRemoved = specialCharactersRemoved.replaceAll(RegExp(r'#.*\n'), '');
       String upnEnabledRemoved = commentsRemoved.replaceAll(RegExp(r'upn_enabled: \b(?:true|false)\b'), '');
       String lastPeriodRemoved = (upnEnabledRemoved.endsWith('.')) ? upnEnabledRemoved.substring(0, upnEnabledRemoved.length - 1): upnEnabledRemoved;
-      String invalidLocalizationsRemoved = lastPeriodRemoved.replaceAll(RegExp(r'\s*l\d+:\s*-\s*\r\n'), '\r\n');
+      String invalidLocalizationsRemoved = lastPeriodRemoved.replaceAll(RegExp(r'\s*([l\d+]|\w+):\s*-\s*\r\n'), '\r\n');
       String caretsRemoved = invalidLocalizationsRemoved.replaceAll(RegExp(r'\^(?![^\n]*:)|(?<=:|^)\^'), '');
 
       String invalidYamlRemoved = caretsRemoved.replaceAll(RegExp(r'^((?!(\s*)(?:-\s*)?([\w]+|[\w]+-[\w]+):)).*', multiLine: true), '');
 
       dynamic yaml = loadYaml(invalidYamlRemoved);
 
-      if (yaml['start_game'] != null){
+      if (yaml['root']['start_game'] != null){
         foundGames.add(_buildGame(yaml: yaml));
-      } else if (yaml['is_ulc'] == null){
+      } else if (yaml['root']['is_ulc'] == null){
         foundDLC.add(_buildDLC(yaml: yaml));
       }
     }
@@ -80,7 +80,7 @@ class LocalUbisoftConnectRetriever extends BaseLocalGameRetriever{
     String appId = 'appId'; // TODO: Find this.
 
     return GameInfo(
-      title: (root['name'] ?? 'Unknown Game') as String, 
+      title: _handleName(yaml: yaml), 
       appId: appId, 
       // iconImagePath: 'basePath/${yaml['icon_image']}',
       // heroImagePath: 'basePath/${yaml['background_image']}', // * These must be somewhere, haven't found them though.
@@ -121,5 +121,26 @@ class LocalUbisoftConnectRetriever extends BaseLocalGameRetriever{
     return games;
   }
 
+  String _handleName({required dynamic yaml}){
+    String? name = yaml['root']['name'];
 
+    if (name == null){
+      return 'Unknown Game';
+    }
+    
+    dynamic localizations = yaml['localizations'];
+
+    RegExp regex = RegExp(r'');
+
+    if (regex.hasMatch(name) && localizations != null){
+      // Get the name from the localizations.
+      String? localizedName = localizations['default'][name];
+
+      if (localizedName != null && localizedName.isNotEmpty){
+        return localizedName;
+      }
+    }
+
+    return name;
+  }
 }

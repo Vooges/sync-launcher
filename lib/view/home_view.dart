@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sync_launcher/controllers/game_controller.dart';
 import 'package:sync_launcher/models/reduced_game_info.dart';
+import 'package:sync_launcher/state/selected_view_state.dart';
+import 'package:sync_launcher/view/settings_view.dart';
 import 'package:sync_launcher/view/widgets/library_widget.dart';
 import 'package:sync_launcher/view/widgets/recently_played_widget.dart';
 
@@ -39,8 +42,20 @@ class HomeView extends StatelessWidget {
         final List<ReducedGameInfo> games = snapshot.data!;
 
         if (games.isEmpty) {
-          return const Center(
-            child: Text('No games found.'),
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Text('No games found.'),
+                TextButton(
+                  onPressed: () {
+                    context.read<SelectedViewState>().setView(SettingsView());
+                  },
+                  child: const Text('Try adding launchers via the settings.')
+                )
+              ],
+            ) 
           );
         }
 

@@ -69,6 +69,7 @@ flutter:
   assets:
     - 'assets/images/launchers/steam/'
     - 'assets/images/launchers/epic_games/'
+    - 'assets/images/launchers/ubisoft_connect/'
     - 'assets/images/logo/'
     - 'assets/images/profile/'
     - 'assets/images/default/'
