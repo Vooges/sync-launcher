@@ -20,22 +20,23 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: _getGames(context),
-      //future: _gameController.index(),
       builder: (context, AsyncSnapshot<List<ReducedGameInfo>> snapshot) {
         if (!snapshot.hasData) {
-          return Column(
-            children: [
-              Center(
-                child: Text(
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
                   'Loading games...',
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: Theme.of(context).textTheme.displayLarge,
                 ),
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              const CircularProgressIndicator(),
-            ],
+                  const SizedBox(
+                  height: 25,
+                ),
+                const CircularProgressIndicator(),
+              ],
+            ),
           );
         }
 
@@ -47,12 +48,27 @@ class HomeView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Text('No games found.'),
+                Text(
+                  'No games found',
+                  style: Theme.of(context).textTheme.displayLarge,
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
                 TextButton(
                   onPressed: () {
                     context.read<SelectedViewState>().setView(SettingsView());
                   },
-                  child: const Text('Try adding launchers via the settings.')
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(Colors.purple)
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Text(
+                      'Try adding launchers via the settings',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ),
                 )
               ],
             ) 

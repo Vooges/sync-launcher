@@ -73,6 +73,7 @@ flutter:
     - 'assets/images/logo/'
     - 'assets/images/profile/'
     - 'assets/images/default/'
+    - 'assets/images/other/'
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
