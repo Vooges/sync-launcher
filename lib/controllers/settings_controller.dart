@@ -46,7 +46,7 @@ class SettingsController {
       case 'Steam':
         String? localPath = launcher.installPath;
 
-        if (localPath != null) {
+        if (localPath != null && localPath.isNotEmpty) {
           String? steam64Id = (await _accountValueRepository.getAccountValueByNameForLauncher(name: 'steam64Id', launcherId: launcherId))?.value;
           String? steam32Id = (await _accountValueRepository.getAccountValueByNameForLauncher(name: 'steam32Id', launcherId: launcherId))?.value;
 
@@ -66,31 +66,37 @@ class SettingsController {
               ),
             );
           } else {
-            // TODO: Show error 'Steam32Id has to be filled in'.
+            throw Exception('Steam32Id has not been supplied.');
           }
+        } else {
+          throw Exception('Install path is empty.');
         }
         break;
       case 'Epic Games':
         String? localPath = launcher.installPath;
 
-        if (localPath != null) {
+        if (localPath != null && localPath.isNotEmpty) {
           gameRetriever = GameRetriever(
             localRetriever: LocalEpicGamesRetriever(
               launcherBasePath: localPath,
             ),
           );
+        } else {
+          throw Exception('Install path is empty.');
         }
 
         break;
       case 'Ubisoft Connect':
         String? localPath = launcher.installPath;
 
-        if (localPath != null){
+        if (localPath != null && localPath.isNotEmpty){
           gameRetriever = GameRetriever(
             localRetriever: LocalUbisoftConnectRetriever(
               launcherBasePath: localPath
             )
           );
+        } else {
+          throw Exception('Install path is empty.');
         }
 
         break;

@@ -55,21 +55,34 @@ class HomeView extends StatelessWidget {
                 const SizedBox(
                   height: 25,
                 ),
-                TextButton(
-                  onPressed: () {
-                    context.read<SelectedViewState>().setView(SettingsView());
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Colors.purple)
+                DecoratedBox(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    gradient: LinearGradient(
+                      colors: <Color>[
+                        Color(0xffD702FF), 
+                        Color(0xff553DFE)
+                      ]
+                    )
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Text(
-                      'Try adding launchers via the settings',
-                      style: Theme.of(context).textTheme.bodyLarge,
+                  child: TextButton(
+                    onPressed: () async {
+                      context.read<SelectedViewState>().setView(const SettingsView());
+                    }, 
+                    style: TextButton.styleFrom(
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10))
+                      )
                     ),
-                  ),
-                )
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Text(
+                        'Try adding launchers via the settings',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                    ),
+                  )
+                ),
               ],
             ) 
           );
