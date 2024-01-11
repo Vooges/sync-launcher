@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sync_launcher/view/widgets/connected_launchers_widget.dart';
+import 'package:sync_launcher/view/widgets/other_settings_widget.dart';
 
 class SettingsView extends StatefulWidget {
   const SettingsView({super.key});
@@ -11,10 +12,12 @@ class SettingsView extends StatefulWidget {
 class _SettingsState extends State<SettingsView>{
   final List<String> settingsCategories = [
     'Launchers',
+    'Other'
   ];
 
   final List<Widget> categories = [
-    const LaunchersWidget()
+    const LaunchersWidget(),
+    OtherSettingsWidget()
   ];
 
   int selectedIndex = 0;

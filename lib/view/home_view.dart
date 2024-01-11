@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sync_launcher/controllers/game_controller.dart';
@@ -94,7 +96,7 @@ class HomeView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                RecentlyPlayedWidget(games: games.sublist(0, 5)),
+                RecentlyPlayedWidget(games: games.sublist(0, min(5, games.length))),
                 const SizedBox(height: 25),
                 LibraryWidget(games: games),
               ],

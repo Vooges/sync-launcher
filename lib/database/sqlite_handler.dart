@@ -86,19 +86,23 @@ class SqliteHandler {
     return count;
   }
 
+  Future rawQuery({required String query}) async {
+    await _openDatabase();
+
+    await _database!.rawQuery(query);
+  }
+
   Future _openDatabase() async {
-    if (_database == null){
-      _database = await databaseFactoryFfi.openDatabase(
-        _fileName,
-        options: OpenDatabaseOptions(
-          version: 1,
-          onCreate: (Database database, int version) async {
-            await database.execute(DatabaseScripts.create);
-            await database.execute(DatabaseScripts.insertLaunchers);
-            await database.execute(DatabaseScripts.insertAccountValues);
-          }
-        )
-      );
-    }
+    _database ??= await databaseFactoryFfi.openDatabase(
+      _fileName,
+      options: OpenDatabaseOptions(
+        version: 1,
+        onCreate: (Database database, int version) async {
+          await database.execute(DatabaseScripts.create);
+          await database.execute(DatabaseScripts.insertLaunchers);
+          await database.execute(DatabaseScripts.insertAccountValues);
+        }
+      )
+    );
   }
 }

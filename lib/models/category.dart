@@ -1,20 +1,20 @@
 class Category {
   final int id;
-  final String description;
+  final String value;
 
   Category({
     required this.id,
-    required this.description
+    required this.value
   });
 
-  Category.fromMap(Map<String, dynamic> map):
+  Category.fromMap({required Map<String, Object?> map}): 
     id = map['id'] as int,
-    description = map['description'] as String;
+    value = map['value'] as String;
 
-  Map<String, dynamic> toJson(){
+  Map<String, Object?> toMap(){
     return {
       'id': id,
-      'description': description
+      'value': value
     };
   }
 }

@@ -29,7 +29,7 @@ class StatusBarWidget extends StatelessWidget {
             IconButton(
               // Settings icon
               onPressed: () {
-                context.read<SelectedViewState>().setView(SettingsView());
+                context.read<SelectedViewState>().setView(const SettingsView());
               },
               icon: const Icon(Icons.settings),
               color: Colors.white,
@@ -63,15 +63,21 @@ class StatusBarWidget extends StatelessWidget {
                 );
               },
             ),
+            // ? Should this even be here?
             IconButton(
-                // Account image
-                onPressed: () {
-                  // TODO: Go to account page.
-                },
-                icon: ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
-                    child: Image.asset('assets/images/profile/garf.jpg',
-                        height: 60, width: 60)))
+              // Account image
+              onPressed: () {
+                // TODO: Go to account page.
+              },
+              icon: ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: Image.asset(
+                  'assets/images/profile/garf.jpg',
+                  height: 60, 
+                  width: 60
+                )
+              )
+            )
           ],
         ));
   }

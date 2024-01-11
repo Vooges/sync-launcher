@@ -1,4 +1,5 @@
 import 'package:sync_launcher/database/repositories/account_value_repository.dart';
+import 'package:sync_launcher/database/repositories/admin_repository.dart';
 import 'package:sync_launcher/database/repositories/launcher_repository.dart';
 import 'package:sync_launcher/models/account_value.dart';
 import 'package:sync_launcher/models/launcher_info.dart';
@@ -10,6 +11,7 @@ import 'package:sync_launcher/retrievers/local/ubisoft_connect/local_ubisoft_con
 import 'package:sync_launcher/retrievers/metadata/steam/local_steam_metadata_retriever.dart';
 
 class SettingsController {
+  final AdminRepository _adminRepository = AdminRepository();
   final LauncherRepository _launcherRepository = LauncherRepository();
   final AccountValueRepository _accountValueRepository = AccountValueRepository();
 
@@ -103,5 +105,9 @@ class SettingsController {
     }
       
     gameRetriever.retrieveGames();
+  }
+
+  Future clearAllData() async {
+    await _adminRepository.clearAllData();
   }
 }

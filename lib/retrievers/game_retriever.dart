@@ -4,7 +4,7 @@ import 'package:sync_launcher/database/repositories/game_repository.dart';
 import 'package:sync_launcher/models/game_info.dart';
 import 'package:sync_launcher/retrievers/api/base_api_game_retriever.dart';
 import 'package:sync_launcher/retrievers/local/base_local_game_retriever.dart';
-import 'package:sync_launcher/retrievers/metadata/online_metadata_retriever.dart';
+import 'package:sync_launcher/retrievers/metadata/other/online_metadata_retriever.dart';
 
 class GameRetriever {
   final GameRepository _gameRepository = GameRepository();

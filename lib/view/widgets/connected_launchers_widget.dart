@@ -32,7 +32,7 @@ class _LaunchersWidget extends State<LaunchersWidget>{
 
         return SingleChildScrollView(
           child: SizedBox(
-            width: screenSize.width - 204,
+            width: screenSize.width - 204, // 204 is the width of the sidebar + the divider line.
             height: screenSize.height,
             child: ListView(
               children: children,

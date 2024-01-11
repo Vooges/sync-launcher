@@ -91,15 +91,15 @@ class GameRepository extends BaseRepository{
         l.image_path as launcher_image_path 
       FROM games g 
       INNER JOIN launchers l 
-      ON g.launcher_id = l.id;
+      ON g.launcher_id = l.id
     ''';
 
     List<String> whereClauses = [];
     List<Object?> whereParameters = [];
 
-    if (search != null) {
-      whereClauses.add('g.title LIKE \'%?%\'');
-      whereParameters.add(search);
+    if (search != null && search.isNotEmpty) {
+      whereClauses.add('g.title LIKE ?');
+      whereParameters.add('%$search%');
     }
 
     if (installed != null){
@@ -109,15 +109,22 @@ class GameRepository extends BaseRepository{
     }
 
     if (launcherIds != null && launcherIds.isNotEmpty){
-      whereClauses.add('l.id IN (?)');
-      whereParameters.add(launcherIds.join(', '));
+      whereClauses.add('l.id IN (${List.filled(launcherIds.length, '?').join(',')})');
+      whereParameters.addAll(launcherIds);
     }
 
     if (categoryIds != null && categoryIds.isNotEmpty){
       // TODO: Implement categories.
     }
 
-    List<Map<String, Object?>> results = await super.sqliteHandler.selectRaw(query: query);
+    if (whereClauses.isNotEmpty){
+      String whereString = 'WHERE ${whereClauses.join(' AND ')}';
+      query = query + whereString;
+    }
+
+    query = '$query;';
+
+    List<Map<String, Object?>> results = await super.sqliteHandler.selectRaw(query: query, parameters: whereParameters);
 
     return results.map((e) => ReducedGameInfo.fromMap(game: e)).toList();
   }

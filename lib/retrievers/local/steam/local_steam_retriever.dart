@@ -8,6 +8,8 @@ import 'package:sync_launcher/retrievers/local/base_local_game_retriever.dart';
 import 'package:sync_launcher/retrievers/metadata/steam/local_steam_metadata_retriever.dart';
 
 class LocalSteamRetriever extends BaseLocalGameRetriever {
+  static const baseURL = 'steam://rungameid/';
+
   late final LocalSteamMetadataRetriever metadataRetriever;
 
   LocalSteamRetriever({required super.launcherBasePath, required String steam32Id}) {
@@ -80,9 +82,6 @@ class LocalSteamRetriever extends BaseLocalGameRetriever {
 
   /// Builds the launch URL for the game.
   String _buildGameLaunchURL({required String appId}){
-    // TODO: Move these constants to be class properties.
-    const String baseUrl = 'steam://rungameid/';
-
-    return baseUrl + appId;
+    return LocalSteamRetriever.baseURL + appId;
   }
 }

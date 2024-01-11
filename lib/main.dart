@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sync_launcher/state/selected_view_state.dart';
-import 'package:sync_launcher/view/home_view.dart';
-import 'package:sync_launcher/view/settings_view.dart';
 import 'package:sync_launcher/view/widgets/status_bar_widget.dart';
 
 void main() {
