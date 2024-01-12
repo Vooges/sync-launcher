@@ -63,7 +63,7 @@ class LocalEpicGamesRetriever extends BaseLocalGameRetriever {
   /// 
   /// Retrieves the manifest files for the installed apps.
   Future<Iterable<File>> _getManifests() async {
-    final Directory manifestDirectory = Directory(super.launcherBasePath);
+    final Directory manifestDirectory = Directory('C:\\ProgramData\\Epic\\EpicGamesLauncher\\Data\\Manifests');//Directory(super.launcherBasePath);
     final Iterable<File> manifests = (await manifestDirectory.list().toList()).whereType<File>();
 
     return manifests;

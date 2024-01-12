@@ -54,19 +54,31 @@ class _LibraryFilterDialogWidget extends State<LibraryFilterDialogWidget> {
               ],
             ),
           ),
+          
           actions: <Widget>[
-            TextButton(
-              onPressed: () async {
-                List<int>? filteredCategoryIds = filters['categories']?.map((e) => e as int).toList() ?? [];
-                List<int>? filteredLauncherIds = filters['launchers']?.map((e) => e as int).toList() ?? [];
-                bool? filteredInstalled = filters['installed']?.map((e) => e as bool).firstOrNull;
+            DecoratedBox(
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+                gradient: LinearGradient(
+                  colors: <Color>[
+                    Color(0xffD702FF), 
+                    Color(0xff553DFE)
+                  ]
+                )
+              ),
+              child: TextButton(
+                onPressed: () async {
+                  List<int>? filteredCategoryIds = filters['categories']?.map((e) => e as int).toList() ?? [];
+                  List<int>? filteredLauncherIds = filters['launchers']?.map((e) => e as int).toList() ?? [];
+                  bool? filteredInstalled = filters['installed']?.map((e) => e as bool).firstOrNull;
 
-                await callback(categoryIds: filteredCategoryIds, launcherIds: filteredLauncherIds, installed: filteredInstalled);
+                  await callback(categoryIds: filteredCategoryIds, launcherIds: filteredLauncherIds, installed: filteredInstalled);
 
-                // ignore: use_build_context_synchronously
-                Navigator.of(context).pop();
-              }, 
-              child: const Text('Filter')
+                  // ignore: use_build_context_synchronously
+                  Navigator.of(context).pop();
+                }, 
+                child: const Text('Filter')
+              )
             )
           ],
         );

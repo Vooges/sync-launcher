@@ -81,6 +81,7 @@ class DetailedGameInformationWidget extends StatelessWidget {
                         gameLaunchURL: gameInfo.launchURL,
                         launcherImagePath: gameInfo.launcherInfo.imagePath,
                         installed: gameInfo.installSize > 0,
+                        context: context,
                       ),
                     ),
                   ],

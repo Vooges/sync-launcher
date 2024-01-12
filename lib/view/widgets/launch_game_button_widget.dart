@@ -6,12 +6,59 @@ class LaunchGameButtonWidget extends StatelessWidget {
   final String launcherImagePath;
   final String gameLaunchURL;
   final bool installed;
+  final BuildContext context;
 
-  const LaunchGameButtonWidget({super.key, required this.gameLaunchURL, required this.launcherImagePath, required this.installed});
+  const LaunchGameButtonWidget({super.key, required this.gameLaunchURL, required this.launcherImagePath, required this.installed, required this.context});
 
   Future<void> _launchGame() async {
-    if (!await launchUrl(Uri.parse(gameLaunchURL))) {
-      throw Exception('Could not launch game');
+    try {
+      if (!await launchUrl(Uri.parse(gameLaunchURL))) {
+        throw Exception('Could not launch game');
+      }
+    } catch (exception){
+      // ignore: use_build_context_synchronously
+      showDialog(
+        context: context, 
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10))
+            ),
+            backgroundColor: const Color.fromRGBO(43, 43, 43, 1),
+            actionsAlignment: MainAxisAlignment.center,
+            title: Center(
+              child: Text(
+                'Error',
+                style: Theme.of(context).textTheme.displayMedium,
+              )
+            ),
+            content: Text(
+              exception.toString(),
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            actions: <Widget>[
+              DecoratedBox(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  gradient: LinearGradient(
+                    colors: <Color>[
+                      Color(0xffD702FF), 
+                      Color(0xff553DFE)
+                    ]
+                  )
+                ),
+                child: TextButton(
+                  onPressed: () => Navigator.pop(context, 'Ok'), 
+                  child: const Text(
+                    'Ok',
+                    style: TextStyle(color: Colors.white),
+                  )
+                )
+              )
+            ],
+          );
+        }
+      );
     }
   }
 
@@ -35,6 +82,7 @@ class LaunchGameButtonWidget extends StatelessWidget {
 
     return DecoratedBox(
       decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(5)),
         gradient: LinearGradient(
           colors: buttonColors
         )
